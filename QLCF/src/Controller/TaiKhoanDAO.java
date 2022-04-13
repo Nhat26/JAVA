@@ -153,37 +153,20 @@ public class TaiKhoanDAO {
         }
         return false;
     }
-       public Boolean Add(String username, String pass, String loaiTK, String maNV) {
+       public Boolean Add(TaiKhoan tk) throws SQLException {
 //        Connection con = Helper.DatabaseHelper.getDBConnect();
-        ResultSet rs = null;
-        Statement statement = null;
-        try {
-//            PreparedStatement pstmt = con.prepareStatement("INSERT INTO `taikhoan`(`taikhoan`, `password`, `loaiTK`, `maNV`) VALUES (?,?,?,?)");
-//            pstmt.setString(1, username);
-//            pstmt.setString(2, pass);
-//            pstmt.setString(3, loaiTK);
-//            pstmt.setString(4, maNV);
-              String sql = "INSERT INTO `taikhoan`(`taikhoan`, `password`, `loaiTK`, `maNV`) VALUES (?,?,?,?)" ;
-              conn = Helper.DatabaseHelper.getDBConnect();
-              statement = conn.prepareStatement(sql);
-              rs = statement.executeQuery(sql);
-//            if (rs.next()) {
-                taikhoan.setTaiKhoan(rs.getString(1));
-                taikhoan.setMatKhau(rs.getString(2));
-                taikhoan.setLoaiTK(rs.getString(3));
-                taikhoan.setMaNV(rs.getString(4));
-                return true;
-//            }
-//            int i = pstmt.executeUpdate();
-//            if (i > 0)
-//            {
-//                return true;
-//            }
-            }
-            catch (SQLException ex) {
-            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
+       String sql = "INSERT INTO taikhoan(taikhoan, matKhau, loaiTK, maNV) VALUES (?,?,?,?)";
+
+        try (
+            Connection conn = Helper.DatabaseHelper.getDBConnect();
+            PreparedStatement stsm = conn.prepareStatement(sql);) {
+            stsm.setString(1, tk.getTaiKhoan());
+            stsm.setString(2, tk.getMatKhau());
+            stsm.setString(3, tk.getLoaiTK());
+            stsm.setString(4, tk.getMaNV());
+
+            return stsm.executeUpdate() > 0;
         }
-        return false;
     }
 
     public Boolean Update(String name, String pass, String loaiTK, String maNV) {

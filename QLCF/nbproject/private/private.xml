@@ -3,25 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Controller/TestDB.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/FrmLogin.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Controller/TaiKhoanDAO.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/FrmDoiMatKhau.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmThemTaiKhoan.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmQuanLyBan.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Controller/BanDAO.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Model/LoaiHang.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmQuanLyThongKe.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmQLDoUong.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmTimTK.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Helper/PhanQuyen.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Helper/DatabaseHelper.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmQuanLyThucDon.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Helper/maHoaMd5.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Model/ConnectToSQLServer.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Model/Ban.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/Model/TaiKhoan.java</file>
-            <file>file:/C:/Users/nhat/Desktop/QLCF%20(1)/QLCF/src/View/frmQuanLyChung.java</file>
+            <file>file:/C:/Users/THE%20LUC/Desktop/JAVA/QLCF/src/View/frmThemTaiKhoan.java</file>
+            <file>file:/C:/Users/THE%20LUC/Desktop/JAVA/QLCF/src/View/frmTimTK.java</file>
+            <file>file:/C:/Users/THE%20LUC/Desktop/JAVA/QLCF/src/Controller/TaiKhoanDAO.java</file>
+            <file>file:/C:/Users/THE%20LUC/Desktop/JAVA/QLCF/src/View/frmQuanLyThucDon.java</file>
         </group>
     </open-files>
 </project-private>

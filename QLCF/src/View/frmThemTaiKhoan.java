@@ -281,7 +281,7 @@ public class frmThemTaiKhoan extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        if (txtUsername.getText().isEmpty()) {
+         if (txtUsername.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Chưa nhập tài khoản!");
             return;
         }
@@ -308,11 +308,19 @@ public class frmThemTaiKhoan extends javax.swing.JFrame {
                 return;
             }
 
-        if (TaiKhoanDAO.getInstance().Add(txtUsername.getText(), txtPass.getText(), txtLoaiTK.getText(), txtMaNV.getText())) {
-            JOptionPane.showMessageDialog(null, "Thêm mới thành công!!");
+        try {
+            TaiKhoan tk = new TaiKhoan();
+            tk.setTaiKhoan(txtUsername.getText());
+            tk.setMatKhau(txtPass.getText());
+            tk.setLoaiTK(txtLoaiTK.getText());
+            tk.setMaNV(txtMaNV.getText());
+            TaiKhoanDAO dao = new TaiKhoanDAO();
+            dao.Add(tk);
+            JOptionPane.showMessageDialog(this, "Thêm thành công!");
             LoadTable();
-        } else {
-            JOptionPane.showMessageDialog(null, "Lỗi!!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
