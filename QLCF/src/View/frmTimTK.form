@@ -181,6 +181,9 @@
               <Dimension value="[92, 26]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtHuyActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="txtTroVe">
           <Properties>

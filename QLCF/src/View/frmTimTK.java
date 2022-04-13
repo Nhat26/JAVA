@@ -114,6 +114,11 @@ public class frmTimTK extends javax.swing.JFrame {
         txtHuy.setText("Huỷ");
         txtHuy.setMaximumSize(new java.awt.Dimension(92, 26));
         txtHuy.setMinimumSize(new java.awt.Dimension(92, 26));
+        txtHuy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHuyActionPerformed(evt);
+            }
+        });
 
         txtTroVe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtTroVe.setText("Trở về");
@@ -236,17 +241,24 @@ public class frmTimTK extends javax.swing.JFrame {
         if (txtHoten.getText().equals("")) {
             showAllTk();
         }
-            
+        find = "";
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void txtHotenCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtHotenCaretUpdate
         // TODO add your handling code here:
-        if (txtHoten.getText().equals("")) {
-            showAllTk();
-        }
-        find = txtHoten.getText();      
-        displayTaiKhoan();
+//       find = txtHoten.getText(); 
+//        if (find.equals("")) {
+//            showAllTk();
+//        }
+//             
+//        displayTaiKhoan();
     }//GEN-LAST:event_txtHotenCaretUpdate
+
+    private void txtHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHuyActionPerformed
+        // TODO add your handling code here:
+        txtHoten.setText("");
+        showAllTk();
+    }//GEN-LAST:event_txtHuyActionPerformed
 
     /**
      * @param args the command line arguments

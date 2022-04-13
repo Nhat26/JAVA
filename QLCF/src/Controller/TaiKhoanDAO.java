@@ -201,6 +201,39 @@ public class TaiKhoanDAO {
         return false;
     }
 
+    
+    public List<TaiKhoan> timListTaiKhoan(String taiKhoan) {
+        List<TaiKhoan> list = new ArrayList<>();
+        ResultSet rs = null;
+        Statement statement = null;
+        try {
+            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN like '%" +taiKhoan+"%'";
+            conn = Helper.DatabaseHelper.getDBConnect();
+            statement = conn.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {                
+                TaiKhoan tk = new TaiKhoan();
+                   tk.setTaiKhoan(rs.getString(1));
+                   tk.setMatKhau(rs.getString(2));
+                   tk.setLoaiTK(rs.getString(3));
+                   tk.setMaNV(rs.getString(4));   
+                   list.add(tk);
+                   return list;
+            }            
+        } catch (Exception e) {
+            System.out.println("Loi khong tim thay tai khoan "+ e.toString());
+        }
+        finally{
+            try {
+                rs.close();
+                statement.close();
+                conn.close();   
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
+    
     public Boolean DoiMatKhau(String taikhoan, String pass) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
@@ -216,4 +249,7 @@ public class TaiKhoanDAO {
         }
         return false;
     }
+    
+    
+    
 }
