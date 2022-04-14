@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controller;
+
 import Model.TaiKhoan;
 import Helper.DatabaseHelper;
 import java.sql.*;
@@ -10,16 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author THE LUC
  */
 public class TaiKhoanDAO {
-    
-     private static TaiKhoanDAO instance;
+
+    private static TaiKhoanDAO instance;
     TaiKhoan taikhoan = new TaiKhoan();
-    
-     public static TaiKhoanDAO getInstance() {
+
+    public static TaiKhoanDAO getInstance() {
         if (instance == null) {
             instance = new TaiKhoanDAO();
         }
@@ -29,12 +31,11 @@ public class TaiKhoanDAO {
     public static void setInstance(TaiKhoanDAO instance) {
         TaiKhoanDAO.instance = instance;
     }
-    
+
     Connection conn = null;
     PreparedStatement preparedStatement = null;
-    
-    public List<TaiKhoan> listTaiKhoan()
-    {
+
+    public List<TaiKhoan> listTaiKhoan() {
         List<TaiKhoan> list = new ArrayList<>();
         ResultSet rs = null;
         Statement statement = null;
@@ -43,33 +44,31 @@ public class TaiKhoanDAO {
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
-            
+
             while (rs.next()) {
-                   TaiKhoan tk = new TaiKhoan();
-                   tk.setTaiKhoan(rs.getString(1));
-                   tk.setMatKhau(rs.getString(2));
-                   tk.setLoaiTK(rs.getString(3));
-                   tk.setMaNV(rs.getString(4));
-                   list.add(tk);               
+                TaiKhoan tk = new TaiKhoan();
+                tk.setTaiKhoan(rs.getString(1));
+                tk.setMatKhau(rs.getString(2));
+                tk.setLoaiTK(rs.getString(3));
+                tk.setMaNV(rs.getString(4));
+                list.add(tk);
             }
         } catch (Exception e) {
-            System.out.println("Loi "+ e.toString());
-        }
-        finally{
+            System.out.println("Loi " + e.toString());
+        } finally {
             try {
                 rs.close();
                 statement.close();
-                conn.close();   
+                conn.close();
             } catch (Exception e) {
             }
         }
         return list;
     }
-    
+
     //
-    
-    public TaiKhoan get1TaiKhoan(){
-        
+    public TaiKhoan get1TaiKhoan() {
+
         ResultSet rs = null;
         Statement statement = null;
         try {
@@ -77,66 +76,65 @@ public class TaiKhoanDAO {
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
-            
+
             while (rs.next()) {
-                   TaiKhoan tk = new TaiKhoan();
-                   tk.setTaiKhoan(rs.getString(1));
-                   tk.setMatKhau(rs.getString(2));
-                   tk.setLoaiTK(rs.getString(3));
-                   tk.setMaNV(rs.getString(4));    
-                   return tk;
+                TaiKhoan tk = new TaiKhoan();
+                tk.setTaiKhoan(rs.getString(1));
+                tk.setMatKhau(rs.getString(2));
+                tk.setLoaiTK(rs.getString(3));
+                tk.setMaNV(rs.getString(4));
+                return tk;
             }
         } catch (Exception e) {
-            System.out.println("Loi "+ e.toString());
-        }
-        finally{
+            System.out.println("Loi " + e.toString());
+        } finally {
             try {
                 rs.close();
                 statement.close();
-                conn.close();   
+                conn.close();
             } catch (Exception e) {
             }
         }
         return null;
     }
+
     //
-    public TaiKhoan timTaiKhoan(String taiKhoan){
+    public TaiKhoan timTaiKhoan(String taiKhoan) {
         ResultSet rs = null;
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN ='" +taiKhoan+"'";
+            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN ='" + taiKhoan + "'";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
-            while (rs.next()) {                
+            while (rs.next()) {
                 TaiKhoan tk = new TaiKhoan();
-                   tk.setTaiKhoan(rs.getString(1));
-                   tk.setMatKhau(rs.getString(2));
-                   tk.setLoaiTK(rs.getString(3));
-                   tk.setMaNV(rs.getString(4));              
-                   return tk;
-            }            
+                tk.setTaiKhoan(rs.getString(1));
+                tk.setMatKhau(rs.getString(2));
+                tk.setLoaiTK(rs.getString(3));
+                tk.setMaNV(rs.getString(4));
+                return tk;
+            }
         } catch (Exception e) {
-            System.out.println("Loi khong tim thay tai khoan "+ e.toString());
-        }
-        finally{
+            System.out.println("Loi khong tim thay tai khoan " + e.toString());
+        } finally {
             try {
                 rs.close();
                 statement.close();
-                conn.close();   
+                conn.close();
             } catch (Exception e) {
             }
         }
         return null;
 
     }
+
     //
-    public Boolean Login(String username, String password) 
-    {
+    public Boolean Login(String username, String password) {
         ResultSet rs = null;
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN ='" +username+"' and MATKHAU = '"+password+"' " ;
+            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN ='" + username + "' and MATKHAU = '" + password + "' ";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
@@ -145,7 +143,7 @@ public class TaiKhoanDAO {
                 taikhoan.setMatKhau(rs.getString(2));
                 taikhoan.setLoaiTK(rs.getString(3));
                 taikhoan.setMaNV(rs.getString(4));
-                
+
                 return true;
             }
         } catch (SQLException ex) {
@@ -153,13 +151,13 @@ public class TaiKhoanDAO {
         }
         return false;
     }
-       public Boolean Add(TaiKhoan tk) throws SQLException {
+
+    public Boolean Add(TaiKhoan tk) throws SQLException {
 //        Connection con = Helper.DatabaseHelper.getDBConnect();
-       String sql = "INSERT INTO taikhoan(taikhoan, matKhau, loaiTK, maNV) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO taikhoan(taikhoan, matKhau, loaiTK, maNV) VALUES (?,?,?,?)";
 
         try (
-            Connection conn = Helper.DatabaseHelper.getDBConnect();
-            PreparedStatement stsm = conn.prepareStatement(sql);) {
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
             stsm.setString(1, tk.getTaiKhoan());
             stsm.setString(2, tk.getMatKhau());
             stsm.setString(3, tk.getLoaiTK());
@@ -186,54 +184,46 @@ public class TaiKhoanDAO {
         return false;
     }
 
-    public Boolean Delete(String taikhoan) {
-        Connection con = Helper.DatabaseHelper.getDBConnect();
-        try {
-            PreparedStatement pstmt = con.prepareStatement("Delete from account where TAIKHOAN=?");
-            pstmt.setString(1, taikhoan);
-            int i = pstmt.executeUpdate();
-            if (i > 0) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
+    public Boolean Delete(String taikhoan) throws SQLException {
+        String sql = "delete from taikhoan where taikhoan =? ";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement pstm = conn.prepareStatement(sql);) {
+            pstm.setString(1, taikhoan);
+            return pstm.executeUpdate() > 0;
         }
-        return false;
     }
 
-    
     public List<TaiKhoan> timListTaiKhoan(String taiKhoan) {
         List<TaiKhoan> list = new ArrayList<>();
         ResultSet rs = null;
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN like '%" +taiKhoan+"%'";
+            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN like '%" + taiKhoan + "%'";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
-            while (rs.next()) {                
+            while (rs.next()) {
                 TaiKhoan tk = new TaiKhoan();
-                   tk.setTaiKhoan(rs.getString(1));
-                   tk.setMatKhau(rs.getString(2));
-                   tk.setLoaiTK(rs.getString(3));
-                   tk.setMaNV(rs.getString(4));   
-                   list.add(tk);
-                   return list;
-            }            
+                tk.setTaiKhoan(rs.getString(1));
+                tk.setMatKhau(rs.getString(2));
+                tk.setLoaiTK(rs.getString(3));
+                tk.setMaNV(rs.getString(4));
+                list.add(tk);
+                return list;
+            }
         } catch (Exception e) {
-            System.out.println("Loi khong tim thay tai khoan "+ e.toString());
-        }
-        finally{
+            System.out.println("Loi khong tim thay tai khoan " + e.toString());
+        } finally {
             try {
                 rs.close();
                 statement.close();
-                conn.close();   
+                conn.close();
             } catch (Exception e) {
             }
         }
         return null;
     }
-    
+
     public Boolean DoiMatKhau(String taikhoan, String pass) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
@@ -249,7 +239,5 @@ public class TaiKhoanDAO {
         }
         return false;
     }
-    
-    
-    
+
 }
