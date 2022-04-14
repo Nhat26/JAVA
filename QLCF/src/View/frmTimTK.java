@@ -236,22 +236,22 @@ public class frmTimTK extends javax.swing.JFrame {
     //
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:      
-        find = txtHoten.getText();      
-        displayTaiKhoan();
-        if (txtHoten.getText().equals("")) {
-            showAllTk();
-        }
-        find = "";
+//        find = txtHoten.getText();      
+//        displayTaiKhoan();
+//        if (txtHoten.getText().equals("")) {
+//            showAllTk();
+//        }
+//        find = "";
     }//GEN-LAST:event_txtTimKiemActionPerformed
 
     private void txtHotenCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtHotenCaretUpdate
-        // TODO add your handling code here:
-//       find = txtHoten.getText(); 
-//        if (find.equals("")) {
-//            showAllTk();
-//        }
-//             
-//        displayTaiKhoan();
+//         TODO add your handling code here:
+       find = txtHoten.getText(); 
+        if (find.equals("")) {
+            showAllTk();
+        }
+             
+        displayTaiKhoan();
     }//GEN-LAST:event_txtHotenCaretUpdate
 
     private void txtHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHuyActionPerformed
