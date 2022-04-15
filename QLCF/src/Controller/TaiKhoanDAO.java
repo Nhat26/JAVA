@@ -224,20 +224,15 @@ public class TaiKhoanDAO {
         return null;
     }
 
-    public Boolean DoiMatKhau(String taikhoan, String pass) {
-        Connection con = Helper.DatabaseHelper.getDBConnect();
-        try {
-            PreparedStatement pstmt = con.prepareStatement("UPDATE `account` SET `taikhoan`=?, `password`=? WHERE TaiKhoan=?");
-            pstmt.setString(1, taikhoan);
-            pstmt.setString(1, pass);
-            int i = pstmt.executeUpdate();
-            if (i > 0) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
+    public Boolean DoiMatKhau(TaiKhoan tk) throws SQLException {
+        String sql = "Update taikhoan set matkhau = ? where taikhoan =?";
 
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
+            stsm.setString(2, tk.getTaiKhoan());
+            stsm.setString(1, tk.getMatKhau());            
+
+            return stsm.executeUpdate() > 0;
+        }
+    }
 }
