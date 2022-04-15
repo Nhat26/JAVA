@@ -61,12 +61,10 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtNhapLai" pref="220" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtMatKhauMoi" pref="220" max="32767" attributes="0"/>
-                          <Component id="txtTaiKhoan" max="32767" attributes="0"/>
-                          <Component id="txtMatKhauCu" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtTaiKhoan" pref="220" max="32767" attributes="0"/>
+                      <Component id="txtMatKhauCu" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtMatkhauMoi" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtNhapLai" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -93,7 +91,7 @@
                   <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtMatKhauMoi" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMatkhauMoi" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -147,17 +145,20 @@
             </Property>
             <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOKActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTaiKhoan">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTaiKhoanActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMatKhauCu">
+        <Component class="javax.swing.JPasswordField" name="txtMatKhauCu">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtMatKhauMoi">
+        <Component class="javax.swing.JPasswordField" name="txtMatkhauMoi">
         </Component>
-        <Component class="javax.swing.JTextField" name="txtNhapLai">
+        <Component class="javax.swing.JPasswordField" name="txtNhapLai">
         </Component>
       </SubComponents>
     </Container>

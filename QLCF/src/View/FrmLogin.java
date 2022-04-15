@@ -23,6 +23,7 @@ public class FrmLogin extends javax.swing.JFrame {
     public FrmLogin() {
         initComponents();
         setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -167,7 +168,7 @@ public class FrmLogin extends javax.swing.JFrame {
         txtTaiKhoan.setText("");
         txtPassword.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
-private void AuthenticateAndLogin() {
+    private void AuthenticateAndLogin() {
         if (txtTaiKhoan.getText().isEmpty()) {
 //            txtmessage.setText("Bạn chưa nhập tên tài khoản!");
                 JOptionPane.showMessageDialog(this, "Sai tên đăng nhập !!");

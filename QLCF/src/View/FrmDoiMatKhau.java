@@ -5,6 +5,10 @@
  */
 package View;
 
+import Controller.TaiKhoanDAO;
+import Model.TaiKhoan;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author nhat
@@ -16,6 +20,7 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
      */
     public FrmDoiMatKhau() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -34,9 +39,9 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
         txtTaiKhoan = new javax.swing.JTextField();
-        txtMatKhauCu = new javax.swing.JTextField();
-        txtMatKhauMoi = new javax.swing.JTextField();
-        txtNhapLai = new javax.swing.JTextField();
+        txtMatKhauCu = new javax.swing.JPasswordField();
+        txtMatkhauMoi = new javax.swing.JPasswordField();
+        txtNhapLai = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +61,11 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
 
         btnOK.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKActionPerformed(evt);
+            }
+        });
 
         txtTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,11 +86,10 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNhapLai, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                        .addComponent(txtTaiKhoan)
-                        .addComponent(txtMatKhauCu)))
+                    .addComponent(txtTaiKhoan, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(txtMatKhauCu)
+                    .addComponent(txtMatkhauMoi)
+                    .addComponent(txtNhapLai))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(207, Short.MAX_VALUE)
@@ -101,7 +110,7 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtMatKhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMatkhauMoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -134,6 +143,60 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
     private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTaiKhoanActionPerformed
+
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        // TODO add your handling code here:
+        if (txtTaiKhoan.getText().isEmpty()) {
+//            txtmessage.setText("Bạn chưa nhập tên tài khoản!");
+                JOptionPane.showMessageDialog(this, "Chưa nhập tên đăng nhập !!");
+            return;
+        }
+        if (txtMatKhauCu.getPassword()== null) {
+//            txtmessage.setText("Bạn chưa nhập mật khẩu!");
+                JOptionPane.showMessageDialog(this, "Chưa nhập mật khẩu cũ!!");
+            return;
+        }
+        
+        if (txtMatkhauMoi.getPassword()== null) {
+//            txtmessage.setText("Bạn chưa nhập mật khẩu!");
+                JOptionPane.showMessageDialog(this, "Chưa nhập mật khẩu mới!!");
+            return;
+        }
+        if (txtNhapLai.getPassword()== null) {
+//            txtmessage.setText("Bạn chưa nhập mật khẩu!");
+                JOptionPane.showMessageDialog(this, "Chưa nhập lại mật khẩu mới!!");
+            return;
+        }
+        
+        if (!TaiKhoanDAO.getInstance().Login(txtTaiKhoan.getText(), txtMatKhauCu.getText())) 
+        {          
+            JOptionPane.showMessageDialog(this, "Sai tên đăng nhập hoặc mật khẩu!!");
+            return;
+        }
+        
+        if(!txtMatkhauMoi.getText().equals(txtNhapLai.getText())){
+            JOptionPane.showMessageDialog(this, "Mật khẩu nhập lại sai");
+            return;
+        }
+        
+        if(txtMatkhauMoi.getText().equals(txtMatKhauCu.getText())){
+            JOptionPane.showMessageDialog(this, "Mật khẩu mới phải khác mật khẩu cũ!");
+            return;
+        }
+        
+         try {
+            TaiKhoan tk = new TaiKhoan();
+            tk.setTaiKhoan(txtTaiKhoan.getText());
+            tk.setMatKhau(txtMatkhauMoi.getText());            
+            TaiKhoanDAO dao = new TaiKhoanDAO();
+            dao.DoiMatKhau(tk);
+            JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_btnOKActionPerformed
 
     /**
      * @param args the command line arguments
@@ -177,9 +240,9 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtMatKhauCu;
-    private javax.swing.JTextField txtMatKhauMoi;
-    private javax.swing.JTextField txtNhapLai;
+    private javax.swing.JPasswordField txtMatKhauCu;
+    private javax.swing.JPasswordField txtMatkhauMoi;
+    private javax.swing.JPasswordField txtNhapLai;
     private javax.swing.JTextField txtTaiKhoan;
     // End of variables declaration//GEN-END:variables
 }

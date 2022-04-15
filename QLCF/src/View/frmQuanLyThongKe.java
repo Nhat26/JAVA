@@ -5,9 +5,7 @@
  */
 package View;
 
-import DAO.DrinksDAO;
-import DTO.Drinks;
-import Utilities.DBUtility;
+import javax.swing.text.Utilities.DBUtility;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
