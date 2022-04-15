@@ -195,7 +195,6 @@ public class FrmDoiMatKhau extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
             e.printStackTrace();
         }
-        
     }//GEN-LAST:event_btnOKActionPerformed
 
     /**

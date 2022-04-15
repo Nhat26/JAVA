@@ -238,34 +238,37 @@ public class frmQuanLyBan extends javax.swing.JFrame {
 
     private void btnDeleteTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTableActionPerformed
         // TODO add your handling code here:
-        Connection con;
-        PreparedStatement pstmt;
-
-        if (idSave != null) {
-            con = Helper.DatabaseHelper.getDBConnect();
-            try {
-                pstmt = con.prepareStatement("Delete from BAN where MABAN= '" + txtTableNumber.getText()+ "'");
-                pstmt.setString(1, idSave);
-                int i = pstmt.executeUpdate();
-                if (i > 0) {
-                    JOptionPane.showMessageDialog(null, "Delete Succesful!!");
-                    displayTable();
-                    idSave = null;
-
-                    txtTableNumber.setText("");
-                    txtNoteTable.setText("");
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Delete fail!!");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(frmQuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selete to Delete!!");
+         if (txtTableNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập Số bàn!");
+            return;
+        }
+        if (txtNoteTable.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "chưa nhập trạng thái bàn");
+            return;
+        }
+        try {
+            BanDAO dao = new BanDAO();
+            dao.Delete(txtTableNumber.getText());
+            JOptionPane.showMessageDialog(this, "Xoá bàn thành công");
+            LoadTable();
+            txtTableNumber.setText("");
+            txtNoteTable.setText("");
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi: "+e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnDeleteTableActionPerformed
+      private void LoadTable() {
+        tableModel.setRowCount(0);
+        List<Ban> list = BanDAO.getInstance().listBan();
+        for (int i = 0; i < list.size(); i++) {
+            Ban ban = list.get(i);
+            Object[] dt = {ban.getMaBan(),ban.getSoBan(), ban.getTinhTrang()};
+            tableModel.addRow(dt);
+        }
 
+    }
     private void tblDisplayMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisplayMouseClicked
 
         // TODO add your handling code here:

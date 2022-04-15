@@ -62,4 +62,12 @@ public class BanDAO {
         }
         return list;
 }
+    public Boolean Delete(String SoBan) throws SQLException {
+        String sql = "delete from BAN where SoBan =? ";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement pstm = conn.prepareStatement(sql);) {
+            pstm.setString(1, SoBan);
+            return pstm.executeUpdate() > 0;
+        }
+    }
 }
