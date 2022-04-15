@@ -69,11 +69,19 @@ public class LoaiHangDAO {
                  Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
             stsm.setString(1, LH.getMaLH());
             stsm.setString(2, LH.getTenLH());
-            int i = Interger.pa
-            stsm.setString(3, LH.getGiaThanhPham(int));
+            
+            stsm.setInt(3, LH.getGiaThanhPham());
             
 
             return stsm.executeUpdate() > 0;
         }
     }
+      public Boolean Delete(String MaLH) throws SQLException {
+        String sql = "delete from LoaiHang where MaLH =? ";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement pstm = conn.prepareStatement(sql);) {
+            pstm.setString(1, MaLH);
+            return pstm.executeUpdate() > 0;
+        }
+      }
 }
