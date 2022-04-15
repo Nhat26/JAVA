@@ -264,7 +264,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         List<Ban> list = BanDAO.getInstance().listBan();
         for (int i = 0; i < list.size(); i++) {
             Ban ban = list.get(i);
-            Object[] dt = {ban.getMaBan(),ban.getSoBan(), ban.getTinhTrang()};
+            Object[] dt = {ban.getSoBan(), ban.getTinhTrang()};
             tableModel.addRow(dt);
         }
 
