@@ -61,4 +61,19 @@ public class LoaiHangDAO {
         }
         return list;
 }
+    public Boolean Add(LoaiHang LH) throws SQLException {
+//        Connection con = Helper.DatabaseHelper.getDBConnect();
+        String sql = "INSERT INTO LOAIHANG(MaLH, tenLH, GiaThanhPham) VALUES (?,?,?)";
+
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
+            stsm.setString(1, LH.getMaLH());
+            stsm.setString(2, LH.getTenLH());
+            int i = Interger.pa
+            stsm.setString(3, LH.getGiaThanhPham(int));
+            
+
+            return stsm.executeUpdate() > 0;
+        }
+    }
 }

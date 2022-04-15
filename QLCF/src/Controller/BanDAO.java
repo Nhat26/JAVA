@@ -62,11 +62,25 @@ public class BanDAO {
         }
         return list;
 }
-    public Boolean Delete(String SoBan) throws SQLException {
-        String sql = "delete from BAN where SoBan =? ";
+     public Boolean Add(Ban ban) throws SQLException {
+//        Connection con = Helper.DatabaseHelper.getDBConnect();
+        String sql = "INSERT INTO Ban(MaBan, SoBan, TinhTrang) VALUES (?,?,?)";
+
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
+            stsm.setString(1, ban.getMaBan());
+            stsm.setString(2, ban.getSoBan());
+            stsm.setString(3, ban.getTinhTrang());
+            
+
+            return stsm.executeUpdate() > 0;
+        }
+    }
+    public Boolean Delete(String MaBan) throws SQLException {
+        String sql = "delete from BAN where MaBan =? ";
         try (
                  Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement pstm = conn.prepareStatement(sql);) {
-            pstm.setString(1, SoBan);
+            pstm.setString(1, MaBan);
             return pstm.executeUpdate() > 0;
         }
     }
