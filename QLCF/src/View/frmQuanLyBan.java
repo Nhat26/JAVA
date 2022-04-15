@@ -32,7 +32,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
     public frmQuanLyBan() {
         initComponents();
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("STT");
+        tableModel.addColumn("Mã Bàn");
         tableModel.addColumn("Số bàn");
         tableModel.addColumn("Trạng thái");
         tblDisplay.setModel(tableModel);
@@ -60,6 +60,8 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         txtTableNumber = new javax.swing.JTextField();
         txtNoteTable = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
+        txtMaBan = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -149,6 +151,9 @@ public class frmQuanLyBan extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Mã Bàn");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,11 +171,17 @@ public class frmQuanLyBan extends javax.swing.JFrame {
                         .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnHome)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTableNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtTableNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -194,7 +205,11 @@ public class frmQuanLyBan extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMaBan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTableNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -210,6 +225,8 @@ public class frmQuanLyBan extends javax.swing.JFrame {
                         .addGap(73, 73, 73))))
         );
 
+        txtMaBan.getAccessibleContext().setAccessibleName("");
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -221,24 +238,41 @@ public class frmQuanLyBan extends javax.swing.JFrame {
 
     private void btnAddTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTableActionPerformed
         // TODO add your handling code here:
-        Connection con = Helper.DatabaseHelper.getDBConnect();
+           if (txtMaBan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập mã bàn!");
+            return;
+        }
+        if (txtTableNumber.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập số bàn!");
+            return;
+        }
+        if (txtNoteTable.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập trạng thái bàn!");
+            return;
+        }
+
         try {
-            Statement stmt = con.createStatement();
-            int i = stmt.executeUpdate("INSERT INTO BAN VALUES ('" + txtTableNumber.getText() + "','" + txtNoteTable.getText() + "',0)");
-            if (i > 0) {
-                JOptionPane.showMessageDialog(null, "Thêm mới thành công!");
-                displayTable();
-            } else {
-                JOptionPane.showMessageDialog(null, "Lỗi!!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmQuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+            Ban ban = new Ban();
+            ban.setMaBan(txtMaBan.getText());
+            ban.setSoBan(txtTableNumber.getText());
+            ban.setTinhTrang(txtNoteTable.getText());
+            BanDAO dao = new BanDAO();
+            dao.Add(ban);
+            JOptionPane.showMessageDialog(this, "Thêm thành công!");
+            LoadTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnAddTableActionPerformed
 
     private void btnDeleteTableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteTableActionPerformed
         // TODO add your handling code here:
-         if (txtTableNumber.getText().isEmpty()) {
+         if (txtMaBan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập Mã bàn!");
+            return;
+        } 
+        if (txtTableNumber.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Chưa nhập Số bàn!");
             return;
         }
@@ -248,13 +282,14 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         }
         try {
             BanDAO dao = new BanDAO();
-            dao.Delete(txtTableNumber.getText());
+            dao.Delete(txtMaBan.getText());
             JOptionPane.showMessageDialog(this, "Xoá bàn thành công");
             LoadTable();
+            txtMaBan.setText("");
             txtTableNumber.setText("");
             txtNoteTable.setText("");
             
-        } catch (Exception e) {
+        } catch (Exception e){
             JOptionPane.showMessageDialog(this, "Lỗi: "+e.getMessage());
             e.printStackTrace();
         }
@@ -264,7 +299,8 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         List<Ban> list = BanDAO.getInstance().listBan();
         for (int i = 0; i < list.size(); i++) {
             Ban ban = list.get(i);
-            Object[] dt = {ban.getSoBan(), ban.getTinhTrang()};
+            // i + 1 = STT , không phải MaBan trong SQL
+            Object[] dt = {ban.getMaBan(),ban.getSoBan(), ban.getTinhTrang()};
             tableModel.addRow(dt);
         }
 
@@ -275,6 +311,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         int row = tblDisplay.getSelectedRow();
         List<Ban> listTable = BanDAO.getInstance().listBan();
         idSave = listTable.get(row).getMaBan();
+        txtMaBan.setText(tblDisplay.getValueAt(row, 0) + "");
         txtTableNumber.setText(tblDisplay.getValueAt(row, 1) + "");
         txtNoteTable.setText(tblDisplay.getValueAt(row, 2) + "");
        
@@ -292,7 +329,6 @@ public class frmQuanLyBan extends javax.swing.JFrame {
                 pstmt = con.prepareStatement("update tables set table_name=?, note=? where ID=?");
                 pstmt.setString(1, txtTableNumber.getText());
                 pstmt.setString(2, txtNoteTable.getText());
-
                 pstmt.setString(3, idSave);
 
                 int i = pstmt.executeUpdate();
@@ -362,8 +398,10 @@ public class frmQuanLyBan extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDisplay;
+    private javax.swing.JTextField txtMaBan;
     private javax.swing.JTextField txtNoteTable;
     private javax.swing.JTextField txtTableNumber;
     // End of variables declaration//GEN-END:variables
@@ -374,7 +412,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
 
         for (int i = 0; i < listTable.size(); i++) {
             Ban ban = listTable.get(i);
-            Object[] dt = {i + 1, ban.getMaBan(), ban.getSoBan(), ban.getTinhTrang()};
+            Object[] dt = {ban.getMaBan(),ban.getSoBan(), ban.getTinhTrang()};
             tableModel.addRow(dt);
         }
     }

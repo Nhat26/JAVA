@@ -59,15 +59,12 @@ public class frmQLDoUong extends javax.swing.JFrame {
         tblDisplay = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtDrinkName = new javax.swing.JTextField();
-        txtPrice = new javax.swing.JTextField();
+        txtTenDoUong = new javax.swing.JTextField();
+        txtGia = new javax.swing.JTextField();
         btnUpdate = new javax.swing.JButton();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
         jLabel4 = new javax.swing.JLabel();
-        txtdateStart = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtdateEnd = new javax.swing.JTextField();
-        txtmadouong = new javax.swing.JTextField();
+        txtMaLH = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -143,9 +140,9 @@ public class frmQLDoUong extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Tên đồ uống:");
 
-        txtDrinkName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTenDoUong.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtGia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GiaoDien/Icon/Edit File_50px.png"))); // NOI18N
         btnUpdate.setText("Sửa");
@@ -156,14 +153,9 @@ public class frmQLDoUong extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Ngày khuyến mãi");
+        jLabel4.setText("Mã loại hàng");
 
-        txtdateStart.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Ngày hết k.m");
-
-        txtdateEnd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtMaLH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,18 +177,14 @@ public class frmQLDoUong extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(108, 108, 108)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDrinkName, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                    .addComponent(txtPrice)
-                                    .addComponent(txtdateStart)
-                                    .addComponent(txtdateEnd, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                                    .addComponent(txtmadouong))))
+                                    .addComponent(txtTenDoUong, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                                    .addComponent(txtGia)
+                                    .addComponent(txtMaLH))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -219,25 +207,19 @@ public class frmQLDoUong extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnHome)
                             .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtmadouong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDrinkName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTenDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtdateStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtdateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                            .addComponent(txtMaLH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnAddDrink, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,21 +240,32 @@ public class frmQLDoUong extends javax.swing.JFrame {
 
     private void btnAddDrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddDrinkActionPerformed
         // TODO add your handling code here:
-        Connection con;
-        Statement stmt;
+         if (txtMaLH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập mã loại hàng!");
+            return;
+        }
+        if (txtTenDoUong.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập tên đồ uống!");
+            return;
+        }
+        if (txtGia.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập giá!");
+            return;
+        }
 
-        con = Helper.DatabaseHelper.getDBConnect();
         try {
-            stmt = con.createStatement();
-            int i = stmt.executeUpdate("INSERT INTO LOAIHANG VALUES ('" + txtmadouong.getText() + "','" + txtDrinkName.getText() + "','" + Integer.parseInt(txtPrice.getText()) + "')");
-            if (i > 0) {
-                displayTable();
-                JOptionPane.showMessageDialog(null, "Insert Succesful!!");
-            } else {
-                JOptionPane.showMessageDialog(null, "Insert fail!!");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmQLDoUong.class.getName()).log(Level.SEVERE, null, ex);
+            LoaiHang LH = new LoaiHang();
+            LH.setMaLH(txtMaLH.getText());
+            LH.setTenLH(txtTenDoUong.getText());
+            int i = Integer.parseInt(txtGia.getText());
+            
+            LoaiHangDAO dao = new LoaiHangDAO();
+            dao.Add(LH);
+            JOptionPane.showMessageDialog(this, "Thêm thành công!");
+            LoadTable();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnAddDrinkActionPerformed
 
@@ -290,9 +283,9 @@ public class frmQLDoUong extends javax.swing.JFrame {
                 if (i > 0) {
                     displayTable();
                     idSave = null;
-                    txtDrinkName.setText("");
-                    txtPrice.setText("");
-                    txtdateStart.setText("");
+                    txtTenDoUong.setText("");
+                    txtGia.setText("");
+                    txtMaLH.setText("");
                     txtdateEnd.setText("");
                     JOptionPane.showMessageDialog(null, "Delete Succesful!!");
                 } else {
@@ -314,9 +307,9 @@ public class frmQLDoUong extends javax.swing.JFrame {
         con = Helper.DatabaseHelper.getDBConnect();
         List<LoaiHang> listLoaiHang = LoaiHangDAO.getInstance().listLoaiHang();
         idSave = listLoaiHang.get(row).getMaLH();
-        txtDrinkName.setText(tblDisplay.getValueAt(row, 1) + "");
-        txtPrice.setText(tblDisplay.getValueAt(row, 2) + "");
-        txtdateStart.setText(tblDisplay.getValueAt(row, 3) + "");
+        txtTenDoUong.setText(tblDisplay.getValueAt(row, 1) + "");
+        txtGia.setText(tblDisplay.getValueAt(row, 2) + "");
+        txtMaLH.setText(tblDisplay.getValueAt(row, 3) + "");
         txtdateEnd.setText(tblDisplay.getValueAt(row, 4) + "");
     }//GEN-LAST:event_tblDisplayMouseClicked
 
@@ -327,8 +320,8 @@ public class frmQLDoUong extends javax.swing.JFrame {
             Connection con = Helper.DatabaseHelper.getDBConnect();
             try {
                 PreparedStatement pstmt = con.prepareStatement("update drinks set name=?, price=?, where MaLH=?");
-                pstmt.setString(1, txtDrinkName.getText());
-                pstmt.setString(2, txtPrice.getText());
+                pstmt.setString(1, txtTenDoUong.getText());
+                pstmt.setString(2, txtGia.getText());
                 pstmt.setString(5, idSave);
                 int i = pstmt.executeUpdate();
                 if (i > 0) {
@@ -407,14 +400,11 @@ public class frmQLDoUong extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDisplay;
-    private javax.swing.JTextField txtDrinkName;
-    private javax.swing.JTextField txtPrice;
-    private javax.swing.JTextField txtdateEnd;
-    private javax.swing.JTextField txtdateStart;
-    private javax.swing.JTextField txtmadouong;
+    private javax.swing.JTextField txtGia;
+    private javax.swing.JTextField txtMaLH;
+    private javax.swing.JTextField txtTenDoUong;
     // End of variables declaration//GEN-END:variables
 
     private void displayTable() {
