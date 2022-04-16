@@ -3,9 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/hiep4/OneDrive/Máy%20tính/JAVA/QLCF/src/Controller/LoaiHangDAO.java</file>
-            <file>file:/C:/Users/hiep4/OneDrive/Máy%20tính/JAVA/QLCF/src/View/frmQLDoUong.java</file>
-            <file>file:/C:/Users/hiep4/OneDrive/Máy%20tính/JAVA/QLCF/src/View/frmQuanLyBan.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/View/frmQuanLyBan.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/View/frmQuanLyThucDon.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/View/frmQLDoUong.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/View/frmQuanLyChung.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/Controller/HoaDonDAO.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/Controller/LoaiHangDAO.java</file>
+            <file>file:/C:/Users/nhat/Desktop/JAVA/QLCF/src/View/frmQuanLyThongKe.java</file>
         </group>
     </open-files>
 </project-private>
