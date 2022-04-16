@@ -76,6 +76,22 @@ public class LoaiHangDAO {
             return stsm.executeUpdate() > 0;
         }
     }
+    
+     public Boolean Update(LoaiHang LH) throws SQLException{
+        String sql = "UPDATE loaihang SET tenLH = ?, giathanhpham = ? " + "WHERE malh = ?";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement stsm = conn.prepareStatement(sql);
+                ) 
+        {
+            stsm.setString(3, LH.getMaLH());
+            stsm.setString(1, LH.getTenLH());
+            stsm.setInt(2, LH.getGiaThanhPham());
+
+            
+            return stsm.executeUpdate() > 0;
+        }
+    }
       public Boolean Delete(String MaLH) throws SQLException {
         String sql = "delete from LoaiHang where MaLH =? ";
         try (

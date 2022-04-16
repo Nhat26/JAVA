@@ -209,11 +209,11 @@ public class frmQLDoUong extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnHome)
                             .addComponent(jLabel1))
-                        .addGap(37, 37, 37)
+                        .addGap(36, 36, 36)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTenDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
+                            .addComponent(txtTenDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -264,7 +264,7 @@ public class frmQLDoUong extends javax.swing.JFrame {
             LoaiHangDAO dao = new LoaiHangDAO();
             dao.Add(LH);
             JOptionPane.showMessageDialog(this, "Thêm thành công!");
-            LoadTable();
+            displayTable();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Loi :" + e.getMessage());
             e.printStackTrace();
@@ -288,8 +288,8 @@ public class frmQLDoUong extends javax.swing.JFrame {
         try {
             LoaiHangDAO dao = new LoaiHangDAO();
             dao.Delete(txtMaLH.getText());
-            JOptionPane.showMessageDialog(this, "Xoá bàn thành công");
-            LoadTable();
+            JOptionPane.showMessageDialog(this, "Xoá đồ uống thành công");
+            displayTable();
             txtMaLH.setText("");
             txtTenDoUong.setText("");
             txtGia.setText("");
@@ -317,25 +317,26 @@ public class frmQLDoUong extends javax.swing.JFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
         // TODO add your handling code here:
-        if (idSave != null) {
-            Connection con = Helper.DatabaseHelper.getDBConnect();
-            try {
-                PreparedStatement pstmt = con.prepareStatement("update drinks set name=?, price=?, where MaLH=?");
-                pstmt.setString(1, txtTenDoUong.getText());
-                pstmt.setString(2, txtGia.getText());
-                pstmt.setString(5, idSave);
-                int i = pstmt.executeUpdate();
-                if (i > 0) {
-                    displayTable();
-                    JOptionPane.showMessageDialog(null, "Update Succesful!!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Update fail!!");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(frmQLDoUong.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seletet ID to update");
+        if (txtMaLH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Mã loại hàng không được để trống!");
+            return;
+        }
+
+        try{
+            LoaiHang LH = new LoaiHang();
+            LH.setMaLH(txtMaLH.getText());
+            LH.setTenLH(txtTenDoUong.getText());
+            LH.setGiaThanhPham(Integer.parseInt(txtGia.getText()));
+
+            LoaiHangDAO dao = new LoaiHangDAO();
+            dao.Update(LH);
+            JOptionPane.showMessageDialog(null, "Cập nhật dữ liệu thành công!!");
+            displayTable();
+
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Lỗi!!");
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnUpdateActionPerformed
 
@@ -417,15 +418,15 @@ public class frmQLDoUong extends javax.swing.JFrame {
             tableModel.addRow(dt);
         }
     }
-
-       private void LoadTable() {
-        tableModel.setRowCount(0);
-        List<LoaiHang> list = LoaiHangDAO.getInstance().listLoaiHang();
-        for (int i = 0; i < list.size(); i++) {
-            LoaiHang LH = list.get(i);
-            // i + 1 = STT , không phải MaBan trong SQL
-            Object[] dt = {LH.getMaLH(),LH.getTenLH(), LH.getGiaThanhPham()};
-            tableModel.addRow(dt);
-        }
-       }
+//
+//       private void LoadTable() {
+//        tableModel.setRowCount(0);
+//        List<LoaiHang> list = LoaiHangDAO.getInstance().listLoaiHang();
+//        for (int i = 0; i < list.size(); i++) {
+//            LoaiHang LH = list.get(i);
+//            // i + 1 = STT , không phải MaBan trong SQL
+//            Object[] dt = {LH.getMaLH(),LH.getTenLH(), LH.getGiaThanhPham()};
+//            tableModel.addRow(dt);
+//        }
+//       }
 }

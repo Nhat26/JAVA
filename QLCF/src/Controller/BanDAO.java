@@ -76,6 +76,22 @@ public class BanDAO {
             return stsm.executeUpdate() > 0;
         }
     }
+     
+      public Boolean Update(Ban ban) throws SQLException{
+        String sql = "UPDATE ban SET soban = ?, tinhtrang = ? " + "WHERE maban = ?";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement stsm = conn.prepareStatement(sql);
+                ) 
+        {
+            stsm.setString(3, ban.getMaBan());
+            stsm.setString(1, ban.getSoBan());
+            stsm.setString(2, ban.getTinhTrang());
+
+            
+            return stsm.executeUpdate() > 0;
+        }
+    }
     public Boolean Delete(String MaBan) throws SQLException {
         String sql = "delete from BAN where MaBan =? ";
         try (

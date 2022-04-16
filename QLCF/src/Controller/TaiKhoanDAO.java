@@ -167,21 +167,20 @@ public class TaiKhoanDAO {
         }
     }
 
-    public Boolean Update(String name, String pass, String loaiTK, String maNV) {
-        Connection con = Helper.DatabaseHelper.getDBConnect();
-        try {
-            PreparedStatement pstmt = con.prepareStatement("UPDATE `account` SET `password`=?,`loaiTK`=?, `maNV=?` WHERE TaiKhoan=?");
-            pstmt.setString(1, pass);
-            pstmt.setString(3, loaiTK);
-            pstmt.setString(4, maNV);
-            int i = pstmt.executeUpdate();
-            if (i > 0) {
-                return true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TaiKhoanDAO.class.getName()).log(Level.SEVERE, null, ex);
+     public Boolean Update(TaiKhoan tk) throws SQLException{
+        String sql = "UPDATE taikhoan SET matKhau = ?, loaiTK = ?, maNV = ? " + "WHERE taiKhoan = ?";
+        try (
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement stsm = conn.prepareStatement(sql);
+                ) 
+        {
+            stsm.setString(4, tk.getTaiKhoan());
+            stsm.setString(1, tk.getMatKhau());
+            stsm.setString(2, tk.getLoaiTK());
+            stsm.setString(3, tk.getMaNV());
+            
+            return stsm.executeUpdate() > 0;
         }
-        return false;
     }
 
     public Boolean Delete(String taikhoan) throws SQLException {
