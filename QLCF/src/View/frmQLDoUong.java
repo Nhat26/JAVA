@@ -31,6 +31,8 @@ public class frmQLDoUong extends javax.swing.JFrame {
     DefaultTableModel tableModel;
     String idSave = null;
 
+    
+    
     public frmQLDoUong() {
         initComponents();
         tableModel = new DefaultTableModel();
@@ -257,7 +259,7 @@ public class frmQLDoUong extends javax.swing.JFrame {
             LoaiHang LH = new LoaiHang();
             LH.setMaLH(txtMaLH.getText());
             LH.setTenLH(txtTenDoUong.getText());
-            int i = Integer.parseInt(txtGia.getText());
+           LH.setGiaThanhPham(Integer.parseInt(txtGia.getText()));
             
             LoaiHangDAO dao = new LoaiHangDAO();
             dao.Add(LH);
@@ -268,34 +270,33 @@ public class frmQLDoUong extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnAddDrinkActionPerformed
-
+    
     private void btnDeleteDrinkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteDrinkActionPerformed
         // TODO add your handling code here:
-        Connection con;
-        PreparedStatement pstmt;
-
-        if (idSave != null) {
-            con = Helper.DatabaseHelper.getDBConnect();
-            try {
-                pstmt = con.prepareStatement("Delete from drinks where ID=?");
-                pstmt.setString(1, idSave);
-                int i = pstmt.executeUpdate();
-                if (i > 0) {
-                    displayTable();
-                    idSave = null;
-                    txtTenDoUong.setText("");
-                    txtGia.setText("");
-                    txtMaLH.setText("");
-                    txtdateEnd.setText("");
-                    JOptionPane.showMessageDialog(null, "Delete Succesful!!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Delete fail!!");
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(frmQLDoUong.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Seletet to Delete!!");
+        if (txtMaLH.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập Mã sản phẩm!");
+            return;
+        } 
+        if (txtTenDoUong.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Chưa nhập tên sản phẩm!");
+            return;
+        }
+        if (txtGia.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "chưa nhập giá sản phẩm");
+            return;
+        }
+        try {
+            LoaiHangDAO dao = new LoaiHangDAO();
+            dao.Delete(txtMaLH.getText());
+            JOptionPane.showMessageDialog(this, "Xoá bàn thành công");
+            LoadTable();
+            txtMaLH.setText("");
+            txtTenDoUong.setText("");
+            txtGia.setText("");
+            
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, "Lỗi: "+e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnDeleteDrinkActionPerformed
 
@@ -309,8 +310,8 @@ public class frmQLDoUong extends javax.swing.JFrame {
         idSave = listLoaiHang.get(row).getMaLH();
         txtTenDoUong.setText(tblDisplay.getValueAt(row, 1) + "");
         txtGia.setText(tblDisplay.getValueAt(row, 2) + "");
-        txtMaLH.setText(tblDisplay.getValueAt(row, 3) + "");
-        txtdateEnd.setText(tblDisplay.getValueAt(row, 4) + "");
+        txtMaLH.setText(tblDisplay.getValueAt(row, 0) + "");
+       
     }//GEN-LAST:event_tblDisplayMouseClicked
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -417,4 +418,14 @@ public class frmQLDoUong extends javax.swing.JFrame {
         }
     }
 
+       private void LoadTable() {
+        tableModel.setRowCount(0);
+        List<LoaiHang> list = LoaiHangDAO.getInstance().listLoaiHang();
+        for (int i = 0; i < list.size(); i++) {
+            LoaiHang LH = list.get(i);
+            // i + 1 = STT , không phải MaBan trong SQL
+            Object[] dt = {LH.getMaLH(),LH.getTenLH(), LH.getGiaThanhPham()};
+            tableModel.addRow(dt);
+        }
+       }
 }
