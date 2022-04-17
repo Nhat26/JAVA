@@ -61,6 +61,35 @@ public class LoaiHangDAO {
         }
         return list;
 }
+    
+    public ArrayList<String> listTenLoaiHang()
+    {
+        ArrayList<String> list = new ArrayList<>();
+        ResultSet rs = null;
+        Statement statement = null;
+        try {
+            String sql = "SELECT tenLH FROM LoaiHang";
+            conn = Helper.DatabaseHelper.getDBConnect();
+            statement = conn.createStatement();
+            rs = statement.executeQuery(sql);
+            
+            while (rs.next()) {                  
+                   list.add(rs.getString("tenLH"));               
+            }
+        } catch (Exception e) {
+            System.out.println("Loi "+ e.toString());
+        }
+        finally{
+            try {
+                rs.close();
+                statement.close();
+                conn.close();   
+            } catch (Exception e) {
+            }
+        }
+        return list;
+}
+    
     public Boolean Add(LoaiHang LH) throws SQLException {
 //        Connection con = Helper.DatabaseHelper.getDBConnect();
         String sql = "INSERT INTO LOAIHANG(MaLH, tenLH, GiaThanhPham) VALUES (?,?,?)";

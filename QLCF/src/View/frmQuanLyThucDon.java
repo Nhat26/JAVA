@@ -5,22 +5,12 @@
  */
 package View;
 
-import Controller.TaiKhoanDAO;
-import Controller.LoaiHangDAO;
-import Controller.HoaDonDAO;
 import Controller.BanDAO;
+import Controller.LoaiHangDAO;
+import Controller.TaiKhoanDAO;
 import Model.Ban;
-import Model.TaiKhoan;
-import Model.LoaiHang;
-import Model.Ban;
-import Helper.DatabaseHelper;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,19 +24,18 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
          * Creates new form frmQuanLyThucDon
          */
         int idTable = -1;
-        DefaultComboBoxModel<Drinks> comboBoxModel;
+        DefaultComboBoxModel<String> comboBoxModel;
         DefaultTableModel tableModelTables;
         DefaultTableModel tableModelDrinks;
         int totalPrice = 0;
 
         public frmQuanLyThucDon() {
                 initComponents();
-                txtDisplay.setText("Xin chao: " + AccountDAO.getInstance().GetAccount().getName());
+                txtDisplay.setText("Xin chào nhân viên: " + TaiKhoanDAO.getInstance().get1TaiKhoan().getMaNV());
                 tableModelTables = new DefaultTableModel();
                 tableModelTables.addColumn("STT");
                 tableModelTables.addColumn("Tên bàn");
                 tableModelTables.addColumn("Trạng thái");
-                tableModelTables.addColumn("Ghi chú");
                 tblTables.setModel(tableModelTables);
                 displayTables();
 
@@ -59,8 +48,10 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 tblOrder.setModel(tableModelDrinks);
 
                 comboBoxModel = new DefaultComboBoxModel<>();
-                Drinks mChon = new Drinks(-1, "---- Chọn đồ uống ----");
-                comboBoxModel.addElement(mChon);
+                cboDrinks.setSelectedIndex(-1);
+                comboBoxModel.setSelectedItem("Chọn loại đồ uống");
+                LoaiHangDAO mChon = new LoaiHangDAO();
+                               
                 cboDrinks.setModel(comboBoxModel);
                 loadDrinks();
         }
@@ -97,13 +88,13 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
         tblTables.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tblTables.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -114,7 +105,6 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblTables);
 
         cboDrinks.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cboDrinks.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboDrinks.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboDrinksActionPerformed(evt);
@@ -136,13 +126,13 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane2.setViewportView(tblOrder);
@@ -233,7 +223,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                     .addComponent(jScrollPane1))
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         pack();
@@ -242,28 +232,28 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
             // TODO add your handling code here:
-            int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
-            Drinks drinks = (Drinks) cboDrinks.getSelectedItem();
-
-            if (invoiceId == -1) {
-                    InvoicesDAO.getInstance().Insert(idTable, AccountDAO.getInstance().GetAccount().getId());
-                    OrdersDAO.getInstance().Insert(drinks.getId(), InvoicesDAO.getInstance().GetMaxIdInvoice(), Integer.parseInt(spnAmount.getValue().toString()));
-            } else {
-                    OrdersDAO.getInstance().Insert(drinks.getId(), invoiceId, Integer.parseInt(spnAmount.getValue().toString()));
-            }
-            Connection con = DBUtility.openConnection();
-            PreparedStatement pstmt;
-            try {
-                    pstmt = con.prepareStatement("update tables set status=1 where ID=?");
-                    pstmt.setInt(1, idTable);
-                    pstmt.executeUpdate();
-                    displayTables();
-                    displayTableDrinks();
-                    btnPay.setEnabled(true);
-                    cboDrinks.setSelectedIndex(0);
-            } catch (SQLException ex) {
-                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
+//            LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
+//
+//            if (invoiceId == -1) {
+//                    InvoicesDAO.getInstance().Insert(idTable, AccountDAO.getInstance().GetAccount().getId());
+//                    OrdersDAO.getInstance().Insert(drinks.getId(), InvoicesDAO.getInstance().GetMaxIdInvoice(), Integer.parseInt(spnAmount.getValue().toString()));
+//            } else {
+//                    OrdersDAO.getInstance().Insert(drinks.getId(), invoiceId, Integer.parseInt(spnAmount.getValue().toString()));
+//            }
+//            Connection con = DBUtility.openConnection();
+//            PreparedStatement pstmt;
+//            try {
+//                    pstmt = con.prepareStatement("update tables set status=1 where ID=?");
+//                    pstmt.setInt(1, idTable);
+//                    pstmt.executeUpdate();
+//                    displayTables();
+//                    displayTableDrinks();
+//                    btnPay.setEnabled(true);
+//                    cboDrinks.setSelectedIndex(0);
+//            } catch (SQLException ex) {
+//                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+//            }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
@@ -273,32 +263,32 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void tblTablesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablesMouseClicked
             // TODO add your handling code here:
-            int row = tblTables.getSelectedRow();
-            btnAdd.setEnabled(true);
-            if ((tblTables.getValueAt(row, 2) + "").equals("Đã đặt")) {
-                    btnPay.setEnabled(true);
-            } else {
-                    btnPay.setEnabled(false);
-            }
-            List<Tables> listTable = TablesDAO.getInstance().LoadListTables();
-            idTable = listTable.get(row).getTableId();
-            displayTableDrinks();
+//            int row = tblTables.getSelectedRow();
+//            btnAdd.setEnabled(true);
+//            if ((tblTables.getValueAt(row, 2) + "").equals("Đã đặt")) {
+//                    btnPay.setEnabled(true);
+//            } else {
+//                    btnPay.setEnabled(false);
+//            }
+//            List<Tables> listTable = TablesDAO.getInstance().LoadListTables();
+//            idTable = listTable.get(row).getTableId();
+//            displayTableDrinks();
     }//GEN-LAST:event_tblTablesMouseClicked
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-            try {
-                    // TODO add your handling code here:
-                    int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
-                    InvoicesDAO.getInstance().Update(invoiceId, totalPrice);
-                    Connection con = DBUtility.openConnection();
-                    PreparedStatement pstmt = con.prepareStatement("update tables set status=0 where ID=?");
-                    pstmt.setInt(1, idTable);
-                    pstmt.executeUpdate();
-                    displayTables();
-                    displayTableDrinks();
-            } catch (SQLException ex) {
-                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                    // TODO add your handling code here:
+//                    int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
+//                    InvoicesDAO.getInstance().Update(invoiceId, totalPrice);
+//                    Connection con = DBUtility.openConnection();
+//                    PreparedStatement pstmt = con.prepareStatement("update tables set status=0 where ID=?");
+//                    pstmt.setInt(1, idTable);
+//                    pstmt.executeUpdate();
+//                    displayTables();
+//                    displayTableDrinks();
+//            } catch (SQLException ex) {
+//                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+//            }
     }//GEN-LAST:event_btnPayActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -366,31 +356,33 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
         private void displayTables() {
                 tableModelTables.setRowCount(0);
-                List<Tables> listTable = TablesDAO.getInstance().LoadListTables();
+                List<Ban> listTable = BanDAO.getInstance().listBan();
                 for (int i = 0; i < listTable.size(); i++) {
-                        Tables tables = listTable.get(i);
-                        Object[] dt = {i + 1, tables.getTableName(), tables.getTableStatus(), tables.getTableNote()};
+                        Ban tables = listTable.get(i);
+                        Object[] dt = {i + 1, tables.getSoBan(), tables.getTinhTrang()};
                         tableModelTables.addRow(dt);
                 }
         }
 
         private void displayTableDrinks() {
-                tableModelDrinks.setRowCount(0);
-
-                List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
-                for (int i = 0; i < listMenu.size(); i++) {
-                        Menu menu = listMenu.get(i);
-                        Object[] dt = {i + 1, menu.getDrinkName(), menu.getPrice(), menu.getCount(), menu.getTotalPrice()};
-                        totalPrice += menu.getTotalPrice();
-                        tableModelDrinks.addRow(dt);
-                }
-                txtTotalPrice.setText(totalPrice + "");
-        }
+//                tableModelDrinks.setRowCount(0);
+//
+//                List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
+//                for (int i = 0; i < listMenu.size(); i++) {
+//                        Menu menu = listMenu.get(i);
+//                        Object[] dt = {i + 1, menu.getDrinkName(), menu.getPrice(), menu.getCount(), menu.getTotalPrice()};
+//                        totalPrice += menu.getTotalPrice();
+//                        tableModelDrinks.addRow(dt);
+//                }
+//                txtTotalPrice.setText(totalPrice + "");
+       }
 
         private void loadDrinks() {
-                List<Drinks> listDrink = DrinksDAO.getInstance().GetListDrink();
-                for (Drinks drinks : listDrink) {
-                        comboBoxModel.addElement(drinks);
-                }
+            List<String>  list = new ArrayList<>();
+            LoaiHangDAO dao = new LoaiHangDAO();
+            list = dao.listTenLoaiHang();
+            for(String drinks : list){
+                comboBoxModel.addElement(drinks);
+            }
         }
 }

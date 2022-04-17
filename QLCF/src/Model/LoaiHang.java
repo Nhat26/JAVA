@@ -12,11 +12,18 @@ public class LoaiHang {
     private String maLH, tenLH;
     int giaThanhPham;
 
-    public LoaiHang() {
+    public LoaiHang(String maLH, String tenLH ) {
+        this.maLH = maLH;
+        this.tenLH = tenLH;
     }
 
+    public LoaiHang() {
+    }
+    
+    
+    
     public LoaiHang(String loaiHang) {
-        this.maLH = maLH;
+        this.maLH = loaiHang;
     }
 
     public LoaiHang(String maLH, String tenLH, int giaThanhPham) {

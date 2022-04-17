@@ -5,12 +5,9 @@
  */
 package Controller;
 import Model.HoaDon;
-import Helper.DatabaseHelper;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author nhat
@@ -63,6 +60,36 @@ public class HoaDonDAO {
             }
         }
         return list;
-}
+    }
+    public HoaDon get1HD(String maHD){
+         ResultSet rs = null;
+        Statement statement = null;
+        try {
+            String sql = "SELECT * FROM TAIKHOAN WHERE TAIKHOAN ='" + maHD + "'";
+            conn = Helper.DatabaseHelper.getDBConnect();
+            statement = conn.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                HoaDon tk = new HoaDon();
+                tk.setMaHD(rs.getString(1));
+                tk.setNgayLapHD(rs.getString(2));
+                tk.setTongTien(rs.getInt(3));
+                tk.setMaNV(rs.getString(4));
+                tk.setMaBan(rs.getString(5));
+                tk.setKhuyenMai(rs.getInt(6));
+                return tk;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi khong tim thay hoa don " + e.toString());
+        } finally {
+            try {
+                rs.close();
+                statement.close();
+                conn.close();
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
     
 }
