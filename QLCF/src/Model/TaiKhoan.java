@@ -9,24 +9,23 @@ package Model;
  * @author THE LUC
  */
 public class TaiKhoan {
-    private String taiKhoan, matKhau, loaiTK, maNV;
+    private String taiKhoan, matKhau, loaiTK, maNV, tenNV;
 
     public TaiKhoan() {
     }
 
-    public TaiKhoan(String taiKhoan) {
-        this.taiKhoan = taiKhoan;
-    }
-
-    public TaiKhoan(String taiKhoan, String matKhau, String loaiTK, String maNV) {
+    public TaiKhoan(String taiKhoan, String matKhau, String loaiTK, String maNV, String tenNV) {
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;
         this.loaiTK = loaiTK;
         this.maNV = maNV;
+        this.tenNV = tenNV;
     }
     
+    public TaiKhoan(String taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
     
-
     public String getTaiKhoan() {
         return taiKhoan;
     }
@@ -59,10 +58,21 @@ public class TaiKhoan {
         this.maNV = maNV;
     }
 
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
+    }
+
     @Override
     public String toString() {
-        return "TaiKhoan{" + "taiKhoan ="  + taiKhoan + ", matKhau=" + matKhau + ", loaiTK=" + loaiTK + ", maNV=" + maNV + '}';
+        return super.toString(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
     }
+    
+    
+
     
     
     

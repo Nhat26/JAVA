@@ -71,7 +71,9 @@ public class TaiKhoanDAO {
         ResultSet rs = null;
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM TaiKhoan";
+            String sql = "Select TAIKHOAN.*, NHANVIEN.TENNV \n"
+                    + "from TAIKHOAN \n"
+                    + "join NHANVIEN on TAIKHOAN.MANV = NHANVIEN.MANV";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
@@ -82,6 +84,7 @@ public class TaiKhoanDAO {
                 tk.setMatKhau(rs.getString(2));
                 tk.setLoaiTK(rs.getString(3));
                 tk.setMaNV(rs.getString(4));
+                tk.setTenNV(rs.getString(5));
                 return tk;
             }
         } catch (Exception e) {
@@ -166,18 +169,15 @@ public class TaiKhoanDAO {
         }
     }
 
-     public Boolean Update(TaiKhoan tk) throws SQLException{
+    public Boolean Update(TaiKhoan tk) throws SQLException {
         String sql = "UPDATE taikhoan SET matKhau = ?, loaiTK = ?, maNV = ? " + "WHERE taiKhoan = ?";
         try (
-                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
-                PreparedStatement stsm = conn.prepareStatement(sql);
-                ) 
-        {
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
             stsm.setString(4, tk.getTaiKhoan());
             stsm.setString(1, tk.getMatKhau());
             stsm.setString(2, tk.getLoaiTK());
             stsm.setString(3, tk.getMaNV());
-            
+
             return stsm.executeUpdate() > 0;
         }
     }
@@ -228,7 +228,7 @@ public class TaiKhoanDAO {
         try (
                  Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
             stsm.setString(2, tk.getTaiKhoan());
-            stsm.setString(1, tk.getMatKhau());            
+            stsm.setString(1, tk.getMatKhau());
 
             return stsm.executeUpdate() > 0;
         }
