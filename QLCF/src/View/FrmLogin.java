@@ -8,6 +8,8 @@ package View;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import Controller.TaiKhoanDAO;
+import Helper.ToanCuc;
+import Model.TaiKhoan;
 import java.awt.event.KeyEvent;
 /**
  *
@@ -16,6 +18,7 @@ import java.awt.event.KeyEvent;
 public class FrmLogin extends javax.swing.JFrame {
 
     Connection conn = Helper.DatabaseHelper.getDBConnect();
+
     
     /**
      * Creates new form FrmLogin
@@ -189,13 +192,18 @@ public class FrmLogin extends javax.swing.JFrame {
 //        QuanLyChung qlc = new QuanLyChung();
 //        qlc.setVisible(true);
              JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công!!");
+             ToanCuc tc = new ToanCuc();
+             TaiKhoan tk = new TaiKhoan();
+            tk =  TaiKhoanDAO.getInstance().get1TaiKhoan(txtTaiKhoan.getText());
+            tc.setTen(tk.getTenNV()); 
             frmQuanLyChung t = new frmQuanLyChung();
             t.setVisible(true);
         dispose();
     }
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         // TODO add your handling code here:
-        AuthenticateAndLogin();
+        
+        AuthenticateAndLogin();        
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void txtTaiKhoanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTaiKhoanKeyPressed

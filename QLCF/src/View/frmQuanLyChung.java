@@ -211,10 +211,10 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        if (!TaiKhoanDAO.getInstance().get1TaiKhoan().getTaiKhoan().equals("admin")) {
-            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
-            return;
-        }
+//        if (!TaiKhoanDAO.getInstance().get1TaiKhoan().getTaiKhoan().equals("admin")) {
+//            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+//            return;
+//        }
         frmThemTaiKhoan ttk = new frmThemTaiKhoan();
         ttk.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -235,6 +235,8 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrder1ActionPerformed
         // TODO add your handling code here:
+        frmQuanLyThucDon frm = new frmQuanLyThucDon();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnOrder1ActionPerformed
 
     private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed

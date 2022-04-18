@@ -66,14 +66,15 @@ public class TaiKhoanDAO {
     }
 
     //
-    public TaiKhoan get1TaiKhoan() {
+    public TaiKhoan get1TaiKhoan(String taiKhoan) {
 
         ResultSet rs = null;
         Statement statement = null;
         try {
             String sql = "Select TAIKHOAN.*, NHANVIEN.TENNV \n"
                     + "from TAIKHOAN \n"
-                    + "join NHANVIEN on TAIKHOAN.MANV = NHANVIEN.MANV";
+                    + "join NHANVIEN on TAIKHOAN.MANV = NHANVIEN.MANV\n"
+                    + "where TAIKHOAN.TaiKhoan = '"+taiKhoan+"'";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);

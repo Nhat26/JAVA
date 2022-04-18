@@ -8,6 +8,7 @@ package View;
 import Controller.BanDAO;
 import Controller.LoaiHangDAO;
 import Controller.TaiKhoanDAO;
+import Helper.ToanCuc;
 import Model.Ban;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +29,12 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         DefaultTableModel tableModelTables;
         DefaultTableModel tableModelDrinks;
         int totalPrice = 0;
+        String dataTranfer;
 
         public frmQuanLyThucDon() {
                 initComponents();
-                txtDisplay.setText("Xin chào nhân viên: " + TaiKhoanDAO.getInstance().get1TaiKhoan().getTenNV());
+                ToanCuc tc = new ToanCuc();
+                txtDisplay.setText("Xin chào nhân viên: " +tc.getTen());
                 tableModelTables = new DefaultTableModel();
                 tableModelTables.addColumn("STT");
                 tableModelTables.addColumn("Tên bàn");
@@ -56,6 +59,8 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 loadDrinks();
         }
 
+
+
         /**
          * This method is called from within the constructor to initialize the
          * form. WARNING: Do NOT modify this code. The content of this method is
@@ -79,7 +84,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
         txtDisplay = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản lý bán hàng");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
