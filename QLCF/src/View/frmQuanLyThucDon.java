@@ -258,19 +258,13 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
             } else {
                     CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), MaHD, Integer.parseInt(spnAmount.getValue().toString()));
             }
-            Connection con = Helper.DatabaseHelper.getDBConnect();
-            PreparedStatement pstmt;
-            try {
-                    pstmt = con.prepareStatement("update tables set status=1 where ID=?status");
-                    pstmt.setInt(1, idTable);
-                    pstmt.executeUpdate();
+            CTHoaDonDAO dao = new CTHoaDonDAO();
+            dao.updateStatus(idTable);
                     displayTables();
-                    displayTableDrinks();
+                    //displayTableDrinks();
                     btnPay.setEnabled(true);
                     cboDrinks.setSelectedIndex(0);
-            } catch (SQLException ex) {
-                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
@@ -290,7 +284,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
             List<Ban> listTable = BanDAO.getInstance().listBan();
             Integer.parseInt(listTable.get(row).getMaBan());
             idTable = listTable.get(row).getMaBan();
-            displayTableDrinks();
+            //displayTableDrinks();
     }//GEN-LAST:event_tblTablesMouseClicked
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed

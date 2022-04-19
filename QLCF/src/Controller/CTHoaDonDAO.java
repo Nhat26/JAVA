@@ -3,11 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Controller;
-import Helper.DatabaseHelper;
-import Model.CTHoaDon;
+import View.frmQuanLyThucDon;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -23,12 +20,12 @@ public class CTHoaDonDAO {
         }
         return instance;
     }
-    public Boolean Insert(int drinkId, int invoiceId, int count) {
+    public Boolean Insert(String drinkId, int invoiceId, int count) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
             PreparedStatement pstmt = con.prepareStatement("INSERT INTO CTHOADON(MaHD, MaLH,SOLUONG ) VALUES (?,?,?)");
             pstmt.setInt(1, invoiceId);
-            pstmt.setInt(2, drinkId);
+            pstmt.setString(2, drinkId);
             pstmt.setInt(3, count);
             int i = pstmt.executeUpdate();
             if (i > 0) {
@@ -38,6 +35,20 @@ public class CTHoaDonDAO {
            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+    public void updateStatus(String idTable) {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        
+            try {
+                    PreparedStatement pstmt;
+                    pstmt = con.prepareStatement("update Ban set TinhTrang=1 where MaBan=? ");
+                    pstmt.setString(1,idTable );
+                    pstmt.executeUpdate();
+                    
+            } catch (SQLException ex) {
+                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 }
     
