@@ -66,6 +66,12 @@ public class TaiKhoanDAO {
     }
 
     //
+    public TaiKhoan getTaiKhoan(){
+        TaiKhoan taiKhoan = new TaiKhoan();
+        return taiKhoan;
+    }
+    
+    //
     public TaiKhoan get1TaiKhoan(String taiKhoan) {
 
         ResultSet rs = null;

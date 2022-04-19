@@ -5,9 +5,12 @@
  */
 package Controller;
 import Model.HoaDon;
+import View.frmQuanLyBan;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author nhat
@@ -61,6 +64,38 @@ public class HoaDonDAO {
         }
         return list;
     }
+    
+    public int GetUncheckInvoiceByTableId(int id) {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM HoaDon WHERE MaBan = ? AND TinhTrang = 0");
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+//                Invoices invoices = new Invoices(rs.getInt(1), rs.getInt(2), rs.getTimestamp(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public Boolean Insert(int id, int MaNV) {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        try {
+            Statement stmt = con.createStatement();
+            int i = stmt.executeUpdate("INSERT INTO HoaDon(MaNV, MaBan, TinhTrang) VALUES ('" + MaNV + "','" + id + "',0)");
+            if (i > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(frmQuanLyBan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    
     public HoaDon get1HD(String maHD){
          ResultSet rs = null;
         Statement statement = null;
@@ -91,5 +126,18 @@ public class HoaDonDAO {
         }
         return null;
     }
-    
+    public int GetMaxIdInvoice() {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(MaHD) FROM HoaDon");
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 1;
+    }
 }

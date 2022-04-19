@@ -12,72 +12,82 @@ package Model;
 public class HoaDon {
     private String maHD,maBan,maNV,ngayLapHD;
     int tongTien, khuyenMai;
+    boolean tinhTrang;
+    
     public HoaDon() {
     }
 
-    public HoaDon(String HoaDon) {
-        this.maHD = maHD;
-    }
-
-    public HoaDon(String maHD, String maBan, String maNV,String ngayLapHD, int tongTien, int khuyenMai) {
+    public HoaDon(String maHD, String maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, boolean tinhTrang) {
         this.maHD = maHD;
         this.maBan = maBan;
         this.maNV = maNV;
         this.ngayLapHD = ngayLapHD;
         this.tongTien = tongTien;
         this.khuyenMai = khuyenMai;
+        this.tinhTrang = tinhTrang;
     }
 
     public String getMaHD() {
         return maHD;
     }
 
-    public String getMaBan() {
-        return maBan;
-    }
-
-    public String getMaNV() {
-        return maNV;
-    }
-
-    public String getNgayLapHD() {
-        return ngayLapHD;
-    }
-
-    public int getTongTien() {
-        return tongTien;
-    }
-
-    public int getKhuyenMai() {
-        return khuyenMai;
-    }
-
     public void setMaHD(String maHD) {
         this.maHD = maHD;
+    }
+
+    public String getMaBan() {
+        return maBan;
     }
 
     public void setMaBan(String maBan) {
         this.maBan = maBan;
     }
 
+    public String getMaNV() {
+        return maNV;
+    }
+
     public void setMaNV(String maNV) {
         this.maNV = maNV;
+    }
+
+    public String getNgayLapHD() {
+        return ngayLapHD;
     }
 
     public void setNgayLapHD(String ngayLapHD) {
         this.ngayLapHD = ngayLapHD;
     }
 
+    public int getTongTien() {
+        return tongTien;
+    }
+
     public void setTongTien(int tongTien) {
         this.tongTien = tongTien;
+    }
+
+    public int getKhuyenMai() {
+        return khuyenMai;
     }
 
     public void setKhuyenMai(int khuyenMai) {
         this.khuyenMai = khuyenMai;
     }
-    
-    @Override
-     public String toString() {
-        return "HoaDon{" + "maHD ="  + maHD + ", maBan=" + maBan + ",ngayLapHD="+ngayLapHD+",tongTien="+ tongTien +", khuyenMai=" + khuyenMai + '}';
+
+    public boolean isTinhTrang() {
+        return tinhTrang;
     }
+
+    public void setTinhTrang(boolean tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+
+    @Override
+    public String toString() {
+        return "HoaDon{" + "maHD=" + maHD + ", maBan=" + maBan + ", maNV=" + maNV + ", ngayLapHD=" + ngayLapHD + ", tongTien=" + tongTien + ", khuyenMai=" + khuyenMai + ", tinhTrang=" + tinhTrang + '}';
+    }
+
+    
+
 }

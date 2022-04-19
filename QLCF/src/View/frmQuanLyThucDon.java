@@ -6,10 +6,13 @@
 package View;
 
 import Controller.BanDAO;
+import Controller.CTHoaDonDAO;
+import Controller.HoaDonDAO;
 import Controller.LoaiHangDAO;
 import Controller.TaiKhoanDAO;
 import Helper.ToanCuc;
 import Model.Ban;
+import Model.LoaiHang;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -24,7 +27,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         /**
          * Creates new form frmQuanLyThucDon
          */
-        int idTable = -1;
+        String idTable ="";
         DefaultComboBoxModel<String> comboBoxModel;
         DefaultTableModel tableModelTables;
         DefaultTableModel tableModelDrinks;
@@ -53,8 +56,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 comboBoxModel = new DefaultComboBoxModel<>();
                 cboDrinks.setSelectedIndex(-1);
                 comboBoxModel.setSelectedItem("Chọn loại đồ uống");
-                LoaiHangDAO mChon = new LoaiHangDAO();
-                               
+                
                 cboDrinks.setModel(comboBoxModel);
                 loadDrinks();
         }
@@ -244,28 +246,29 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
             // TODO add your handling code here:
-            //int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
-//            LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
-//
-//            if (invoiceId == -1) {
-//                    InvoicesDAO.getInstance().Insert(idTable, AccountDAO.getInstance().GetAccount().getId());
-//                    OrdersDAO.getInstance().Insert(drinks.getId(), InvoicesDAO.getInstance().GetMaxIdInvoice(), Integer.parseInt(spnAmount.getValue().toString()));
-//            } else {
-//                    OrdersDAO.getInstance().Insert(drinks.getId(), invoiceId, Integer.parseInt(spnAmount.getValue().toString()));
-//            }
-//            Connection con = DBUtility.openConnection();
-//            PreparedStatement pstmt;
-//            try {
-//                    pstmt = con.prepareStatement("update tables set status=1 where ID=?");
-//                    pstmt.setInt(1, idTable);
-//                    pstmt.executeUpdate();
-//                    displayTables();
-//                    displayTableDrinks();
-//                    btnPay.setEnabled(true);
-//                    cboDrinks.setSelectedIndex(0);
-//            } catch (SQLException ex) {
-//                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            int MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(Integer.parseInt(idTable));
+            LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
+
+            if (MaHD == -1) {
+                    HoaDonDAO.getInstance().Insert(Integer.parseInt(idTable), Integer.parseInt(TaiKhoanDAO.getInstance().getTaiKhoan().getMaNV()));
+                    CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), HoaDonDAO.getInstance().GetMaxIdInvoice(),
+                            Integer.parseInt(spnAmount.getValue().toString()));
+            } else {
+                    CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), MaHD, Integer.parseInt(spnAmount.getValue().toString()));
+            }
+            Connection con = Helper.DatabaseHelper.getDBConnect();
+            PreparedStatement pstmt;
+            try {
+                    pstmt = con.prepareStatement("update tables set status=1 where ID=?status");
+                    pstmt.setInt(1, idTable);
+                    pstmt.executeUpdate();
+                    displayTables();
+                    displayTableDrinks();
+                    btnPay.setEnabled(true);
+                    cboDrinks.setSelectedIndex(0);
+            } catch (SQLException ex) {
+                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
@@ -275,16 +278,17 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void tblTablesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablesMouseClicked
             // TODO add your handling code here:
-//            int row = tblTables.getSelectedRow();
-//            btnAdd.setEnabled(true);
-//            if ((tblTables.getValueAt(row, 2) + "").equals("Đã đặt")) {
-//                    btnPay.setEnabled(true);
-//            } else {
-//                    btnPay.setEnabled(false);
-//            }
-//            List<Tables> listTable = TablesDAO.getInstance().LoadListTables();
-//            idTable = listTable.get(row).getTableId();
-//            displayTableDrinks();
+            int row = tblTables.getSelectedRow();
+            btnAdd.setEnabled(true);
+            if ((tblTables.getValueAt(row, 2) + "").equals("Đã đặt")) {
+                    btnPay.setEnabled(true);
+            } else {
+                    btnPay.setEnabled(false);
+            }
+            List<Ban> listTable = BanDAO.getInstance().listBan();
+            Integer.parseInt(listTable.get(row).getMaBan());
+            idTable = listTable.get(row).getMaBan();
+            displayTableDrinks();
     }//GEN-LAST:event_tblTablesMouseClicked
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
