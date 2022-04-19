@@ -44,6 +44,11 @@ public class CTHoaDon {
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
+
+    @Override
+    public String toString() {
+        return "CTHoaDon{" + "maHD=" + maHD + ", maLH=" + maLH + ", soLuong=" + soLuong + '}';
+    }
     
     
     
