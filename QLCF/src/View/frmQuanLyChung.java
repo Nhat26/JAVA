@@ -204,7 +204,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnQLTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLTKActionPerformed
         // TODO add your handling code here:
-        frmThemTaiKhoan qlo = new frmThemTaiKhoan();
+        frmQuanLyTaiKhoan qlo = new frmQuanLyTaiKhoan();
         qlo.setVisible(true);
 //        dispose();
     }//GEN-LAST:event_btnQLTKActionPerformed
@@ -215,7 +215,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 //            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
 //            return;
 //        }
-        frmThemTaiKhoan ttk = new frmThemTaiKhoan();
+        frmQuanLyTaiKhoan ttk = new frmQuanLyTaiKhoan();
         ttk.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -241,6 +241,8 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
         // TODO add your handling code here:
+        frmQuanLyNhanVien qld = new frmQuanLyNhanVien();
+        qld.setVisible(true);
     }//GEN-LAST:event_btnQLNVActionPerformed
 
     /**

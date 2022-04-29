@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class BanDAO {
      private static BanDAO instance;
-    Ban taikhoan = new Ban();
+    Ban ban = new Ban();
     
      public static BanDAO getInstance() {
         if (instance == null) {

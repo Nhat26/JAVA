@@ -6,7 +6,7 @@ package Model;
 
 /**
  *
- * @author THE LUC
+ * @author hiep4
  */
 public class TaiKhoan {
     private String taiKhoan, matKhau, loaiTK, maNV, tenNV;

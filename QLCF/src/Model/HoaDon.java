@@ -10,14 +10,13 @@ package Model;
  * @author nhat
  */
 public class HoaDon {
-    private String maHD,maBan,maNV,ngayLapHD;
-    int tongTien, khuyenMai;
-    boolean tinhTrang;
+    private String maBan,maNV,ngayLapHD,tinhTrang;
+    int tongTien, khuyenMai, maHD;
     
     public HoaDon() {
     }
 
-    public HoaDon(String maHD, String maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, boolean tinhTrang) {
+    public HoaDon(int maHD, String maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, String tinhTrang) {
         this.maHD = maHD;
         this.maBan = maBan;
         this.maNV = maNV;
@@ -27,11 +26,11 @@ public class HoaDon {
         this.tinhTrang = tinhTrang;
     }
 
-    public String getMaHD() {
+    public int getMaHD() {
         return maHD;
     }
 
-    public void setMaHD(String maHD) {
+    public void setMaHD(int maHD) {
         this.maHD = maHD;
     }
 
@@ -75,11 +74,11 @@ public class HoaDon {
         this.khuyenMai = khuyenMai;
     }
 
-    public boolean isTinhTrang() {
+    public String getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(boolean tinhTrang) {
+    public void setTinhTrang(String tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
 

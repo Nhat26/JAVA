@@ -122,6 +122,11 @@ public class frmTimTK extends javax.swing.JFrame {
 
         txtTroVe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtTroVe.setText("Trở về");
+        txtTroVe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTroVeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -259,6 +264,13 @@ public class frmTimTK extends javax.swing.JFrame {
         txtHoten.setText("");
         showAllTk();
     }//GEN-LAST:event_txtHuyActionPerformed
+
+    private void txtTroVeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTroVeActionPerformed
+        // TODO add your handling code here:
+        frmQuanLyTaiKhoan qld = new frmQuanLyTaiKhoan();
+        qld.setVisible(true);
+        dispose();  
+    }//GEN-LAST:event_txtTroVeActionPerformed
 
     /**
      * @param args the command line arguments

@@ -9,14 +9,20 @@ import Controller.BanDAO;
 import Controller.CTHoaDonDAO;
 import Controller.HoaDonDAO;
 import Controller.LoaiHangDAO;
+import Controller.MenuDAO;
 import Controller.TaiKhoanDAO;
 import Helper.ToanCuc;
-import Helper.DatabaseHelper;
 import Model.Ban;
 import Model.LoaiHang;
 import Model.HoaDon;
+import Model.Menu;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,8 +47,8 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 ToanCuc tc = new ToanCuc();
                 txtDisplay.setText("Xin chào nhân viên: " +tc.getTen());
                 tableModelTables = new DefaultTableModel();
-                tableModelTables.addColumn("STT");
-                tableModelTables.addColumn("Tên bàn");
+                tableModelTables.addColumn("Mã Bàn");
+                tableModelTables.addColumn("Số bàn");
                 tableModelTables.addColumn("Trạng thái");
                 tblTables.setModel(tableModelTables);
                 displayTables();
@@ -248,23 +254,22 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
             // TODO add your handling code here:
-            int MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(Integer.parseInt(idTable));
+            String MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId((idTable));
             LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
 
-            if (MaHD == -1) {
-                    HoaDonDAO.getInstance().Insert(Integer.parseInt(idTable), Integer.parseInt(TaiKhoanDAO.getInstance().getTaiKhoan().getMaNV()));
+            if (MaHD == null) {
+                    HoaDonDAO.getInstance().Insert((idTable),TaiKhoanDAO.getInstance().getTaiKhoan().getMaNV());
                     CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), HoaDonDAO.getInstance().GetMaxIdInvoice(),
                             Integer.parseInt(spnAmount.getValue().toString()));
             } else {
-                    CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), MaHD, Integer.parseInt(spnAmount.getValue().toString()));
+                    CTHoaDonDAO.getInstance().Insert(MaHD ,drinks.getMaLH(),  Integer.parseInt(spnAmount.getValue().toString()));
             }
             CTHoaDonDAO dao = new CTHoaDonDAO();
             dao.updateStatus(idTable);
                     displayTables();
                     //displayTableDrinks();
                     btnPay.setEnabled(true);
-                    cboDrinks.setSelectedIndex(0);
-            
+                    cboDrinks.setSelectedIndex(0);           
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
@@ -282,9 +287,9 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     btnPay.setEnabled(false);
             }
             List<Ban> listTable = BanDAO.getInstance().listBan();
-            Integer.parseInt(listTable.get(row).getMaBan());
+            listTable.get(row).getMaBan();
             idTable = listTable.get(row).getMaBan();
-            //displayTableDrinks();
+            displayTableDrinks();
     }//GEN-LAST:event_tblTablesMouseClicked
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
@@ -371,22 +376,22 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 List<Ban> listTable = BanDAO.getInstance().listBan();
                 for (int i = 0; i < listTable.size(); i++) {
                         Ban tables = listTable.get(i);
-                        Object[] dt = {i + 1, tables.getSoBan(), tables.getTinhTrang()};
+                        Object[] dt = {tables.getMaBan(), tables.getSoBan(), tables.getTinhTrang()};
                         tableModelTables.addRow(dt);
                 }
         }
 
         private void displayTableDrinks() {
-//                tableModelDrinks.setRowCount(0);
-//
-//                List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
-//                for (int i = 0; i < listMenu.size(); i++) {
-//                        Menu menu = listMenu.get(i);
-//                        Object[] dt = {i + 1, menu.getDrinkName(), menu.getPrice(), menu.getCount(), menu.getTotalPrice()};
-//                        totalPrice += menu.getTotalPrice();
-//                        tableModelDrinks.addRow(dt);
-//                }
-//                txtTotalPrice.setText(totalPrice + "");
+                tableModelDrinks.setRowCount(0);
+
+                List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
+                for (int i = 0; i < listMenu.size(); i++) {
+                        Menu menu = listMenu.get(i);
+                        Object[] dt = {i + 1, menu.getDrinkName(), menu.getPrice(), menu.getCount(), menu.getTotalPrice()};
+                        totalPrice += menu.getTotalPrice();
+                        tableModelDrinks.addRow(dt);
+                }
+                txtTotalPrice.setText(totalPrice + "");
        }
 
         private void loadDrinks() {

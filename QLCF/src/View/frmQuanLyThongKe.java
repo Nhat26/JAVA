@@ -3,16 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
-
-import javax.swing.text.Utilities.DBUtility;
+package View; 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import Model.HoaDon;
+import Controller.HoaDonDAO;
+import java.util.List;
+import javax.swing.JOptionPane;
+import Helper.DatabaseHelper;
+import java.util.ArrayList;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
+
+
+
 
 /**
  *
@@ -20,15 +31,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmQuanLyThongKe extends javax.swing.JFrame {
 
+   
     /**
      * Creates new form QuanLyDonHang
      */
     DefaultTableModel tableModel;
-    
+    Connection conn = null;
+    PreparedStatement preparedStatement = null;
     public frmQuanLyThongKe() {
         initComponents();
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("STT");
+        tableModel.addColumn("Mã hóa đơn");
         tableModel.addColumn("Nhân viên");
         tableModel.addColumn("Tên bàn");
         tableModel.addColumn("Tổng tiền");
@@ -50,6 +63,7 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblThongKe = new javax.swing.JTable();
         btnHome = new javax.swing.JButton();
+        btnQueryChart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản lý thống kê");
@@ -82,6 +96,13 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
             }
         });
 
+        btnQueryChart.setText("Query chart");
+        btnQueryChart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQueryChartActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,11 +113,13 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnHome)
                         .addGap(73, 73, 73)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                         .addGap(236, 236, 236))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnQueryChart)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,9 +128,10 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHome)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnQueryChart, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -119,6 +143,32 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void btnQueryChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQueryChartActionPerformed
+        // TODO add your handling code here:
+        try{
+            String sql = "SELECT ngaylapHD,tongtien FROM HoaDon";
+            JDBCCategoryDataset dataset = new JDBCCategoryDataset(Helper.DatabaseHelper.getDBConnect(),sql);
+//            List<HoaDon> listItem = HoaDonDAO.getInstance().listHoaDon();
+//            DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+//            if (listItem != null) {
+//                 for (HoaDon item : listItem) {
+//                     dataset.addValue(item.getNgayLapHD());
+//                 }
+//            }
+            JFreeChart chart = ChartFactory.createLineChart("Query chart", "Ngày lập hóa đơn", "Tổng tiền", dataset, PlotOrientation.VERTICAL, false, true, true);
+            BarRenderer renderer = null;
+            CategoryPlot plot = null;
+            renderer = new BarRenderer();
+            ChartFrame frame = new ChartFrame("Query chart",chart);
+            frame.setVisible(true);
+            frame.setSize(400,650);
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnQueryChartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -172,24 +222,34 @@ public class frmQuanLyThongKe extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHome;
+    private javax.swing.JButton btnQueryChart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblThongKe;
     // End of variables declaration//GEN-END:variables
 
     private void LoadTableThongKe() {
+//        tableModel.setRowCount(0);
+//        Connection con = Helper.DatabaseHelper.getDBConnect();
+//        try {
+//            PreparedStatement pstmt = con.prepareStatement("SELECT `taikhoan`.`tennv`, `ban`.`maban`, `hoadon`.`tongtien`, `hoadon`.`ngaylapHD` "
+//                    + "FROM `hoaodon`, `ban`,`taikhoan` WHERE `hoadon`.`maban`=`ban`.`maban` AND `hoadon`.`manv`=`taikhoan`.`manv` ");
+////                    + "AND `invoice`.`status`=1");
+//            ResultSet rs = pstmt.executeQuery();
+//            int i = 1;
+//            while (rs.next()) {
+//                Object[] dt = {i++, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getString(4)};
+//                tableModel.addRow(dt);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(frmQuanLyThongKe.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         tableModel.setRowCount(0);
-        Connection con = DBUtility.openConnection();
-        try {
-            PreparedStatement pstmt = con.prepareStatement("SELECT `account`.`name`, `tables`.`table_name`, `invoice`.`total_price`, `invoice`.`invoice_date` FROM `invoice`, `tables`,`account` WHERE `invoice`.`tables_id`=`tables`.`ID` AND `invoice`.`account_ID`=`account`.`ID` AND `invoice`.`status`=1");
-            ResultSet rs = pstmt.executeQuery();
-            int i = 1;
-            while (rs.next()) {
-                Object[] dt = {i++, rs.getString(1), rs.getString(2), rs.getInt(3), rs.getTimestamp(4)};
-                tableModel.addRow(dt);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(frmQuanLyThongKe.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        List<HoaDon> list = HoaDonDAO.getInstance().listHoaDon();
+        for (int i = 0; i < list.size(); i++) {
+            HoaDon hoaDon = list.get(i);
+            Object[] dt = {hoaDon.getMaHD(),hoaDon.getMaNV(),hoaDon.getMaBan(), hoaDon.getTongTien(), hoaDon.getNgayLapHD()};
+            tableModel.addRow(dt);
+         }
     }
 }

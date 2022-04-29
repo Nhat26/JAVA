@@ -34,7 +34,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Mã Bàn");
         tableModel.addColumn("Số bàn");
-        tableModel.addColumn("Trạng thái");
+//        tableModel.addColumn("Trạng thái");
         tblDisplay.setModel(tableModel);
         displayTable();
     }
@@ -248,10 +248,6 @@ public class frmQuanLyBan extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Chưa nhập số bàn!");
             return;
         }
-        if (txtNoteTable.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Chưa nhập trạng thái bàn!");
-            return;
-        }
 
         try {
             Ban ban = new Ban();
@@ -276,10 +272,6 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         } 
         if (txtTableNumber.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Chưa nhập Số bàn!");
-            return;
-        }
-        if (txtNoteTable.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "chưa nhập trạng thái bàn");
             return;
         }
         try {
@@ -315,7 +307,6 @@ public class frmQuanLyBan extends javax.swing.JFrame {
         idSave = listTable.get(row).getMaBan();
         txtMaBan.setText(tblDisplay.getValueAt(row, 0) + "");
         txtTableNumber.setText(tblDisplay.getValueAt(row, 1) + "");
-        txtNoteTable.setText(tblDisplay.getValueAt(row, 2) + "");
        
     }//GEN-LAST:event_tblDisplayMouseClicked
 
@@ -326,7 +317,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
 
         if (txtMaBan.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ban không được để trống!");
+            JOptionPane.showMessageDialog(null, "Bàn không được để trống!");
             return;
         }
 
