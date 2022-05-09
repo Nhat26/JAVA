@@ -9,14 +9,14 @@ package Model;
  * @author hiep4
  */
 public class NhanVien {
-    private String maNV,tenNV,chucVu,ngayVaoLam;
-    int sDT;
+    private String tenNV,chucVu,ngayVaoLam;
+    int maNV,sDT;
     boolean gioiTinh;
     
     public NhanVien() {
     }
 
-    public NhanVien(String maNV, String tenNV, int sDT, String chucVu, String ngayVaoLam, boolean gioiTinh) {
+    public NhanVien(int maNV, String tenNV, int sDT, String chucVu, String ngayVaoLam, boolean gioiTinh) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.sDT = sDT;
@@ -25,11 +25,11 @@ public class NhanVien {
         this.gioiTinh = gioiTinh;
     }
 
-    public String getMaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 

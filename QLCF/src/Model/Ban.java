@@ -9,7 +9,9 @@ package Model;
  * @author hiep4
  */
 public class Ban {
-    private String maBan, soBan, tinhTrang;
+    private String soBan;
+    private int maBan;
+    private boolean tinhTrang;
 
     public Ban() {
     }
@@ -18,7 +20,7 @@ public class Ban {
         this.maBan = maBan;
     }
 
-    public Ban(String maBan, String soBan, String tinhTrang) {
+    public Ban(int maBan, String soBan, boolean tinhTrang) {
         this.maBan = maBan;
         this.soBan = soBan;
         this.tinhTrang = tinhTrang;
@@ -26,11 +28,11 @@ public class Ban {
     
     
 
-    public String getMaBan() {
+    public int getMaBan() {
         return maBan;
     }
 
-    public void setMaBan(String maBan) {
+    public void setMaBan(int maBan) {
         this.maBan = maBan;
     }
 
@@ -42,11 +44,11 @@ public class Ban {
         this.soBan = soBan;
     }
 
-    public String getTinhTrang() {
+    public boolean getTinhTrang() {
         return tinhTrang;
     }
 
-    public void setTinhTrang(String tinhTrang) {
+    public void setTinhTrang(boolean tinhTrang) {
         this.tinhTrang = tinhTrang;
     }
 

@@ -9,17 +9,31 @@ package Model;
  * @author hiep4
  */
 public class TaiKhoan {
-    private String taiKhoan, matKhau, loaiTK, maNV, tenNV;
+    private String taiKhoan, matKhau, loaiTK, tenNV;
+    int maTK,maNV;
 
     public TaiKhoan() {
     }
 
-    public TaiKhoan(String taiKhoan, String matKhau, String loaiTK, String maNV, String tenNV) {
+    public TaiKhoan(int maTK,String taiKhoan, String matKhau, String loaiTK, int maNV, String tenNV) {
+        this.maTK = maTK;
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;
         this.loaiTK = loaiTK;
         this.maNV = maNV;
         this.tenNV = tenNV;
+    }
+    
+    public TaiKhoan(int maTK) {
+        this.maTK = maTK;
+    }
+    
+    public int getMaTK() {
+        return maTK;
+    }
+    
+     public void setMaTK(int maTK) {
+         this.maTK = maTK;
     }
     
     public TaiKhoan(String taiKhoan) {
@@ -50,11 +64,11 @@ public class TaiKhoan {
         this.loaiTK = loaiTK;
     }
 
-    public String getMaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 

@@ -29,7 +29,7 @@ public class frmQLDoUong extends javax.swing.JFrame {
      * Creates new form QuanLyBan
      */
     DefaultTableModel tableModel;
-    String idSave = null;
+    int idSave = -1;
 
     
     
@@ -257,9 +257,9 @@ public class frmQLDoUong extends javax.swing.JFrame {
 
         try {
             LoaiHang LH = new LoaiHang();
-            LH.setMaLH(txtMaLH.getText());
+            LH.setMaLH(Integer.parseInt(txtMaLH.getText()));
             LH.setTenLH(txtTenDoUong.getText());
-           LH.setGiaThanhPham(Integer.parseInt(txtGia.getText()));
+            LH.setGiaThanhPham(Integer.parseInt(txtGia.getText()));
             
             LoaiHangDAO dao = new LoaiHangDAO();
             dao.Add(LH);
@@ -324,7 +324,7 @@ public class frmQLDoUong extends javax.swing.JFrame {
 
         try{
             LoaiHang LH = new LoaiHang();
-            LH.setMaLH(txtMaLH.getText());
+            LH.setMaLH(Integer.parseInt(txtMaLH.getText()));
             LH.setTenLH(txtTenDoUong.getText());
             LH.setGiaThanhPham(Integer.parseInt(txtGia.getText()));
 

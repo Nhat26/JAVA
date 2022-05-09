@@ -46,10 +46,11 @@ public class TaiKhoanDAO {
 
             while (rs.next()) {
                 TaiKhoan tk = new TaiKhoan();
-                tk.setTaiKhoan(rs.getString(1));
-                tk.setMatKhau(rs.getString(2));
-                tk.setLoaiTK(rs.getString(3));
-                tk.setMaNV(rs.getString(4));
+                tk.setMaTK(rs.getInt(1));
+                tk.setTaiKhoan(rs.getString(2));
+                tk.setMatKhau(rs.getString(3));
+                tk.setLoaiTK(rs.getString(4));
+                tk.setTenNV(rs.getString(5));
                 list.add(tk);
             }
         } catch (Exception e) {
@@ -87,11 +88,12 @@ public class TaiKhoanDAO {
 
             while (rs.next()) {
                 TaiKhoan tk = new TaiKhoan();
-                tk.setTaiKhoan(rs.getString(1));
-                tk.setMatKhau(rs.getString(2));
-                tk.setLoaiTK(rs.getString(3));
-                tk.setMaNV(rs.getString(4));
-                tk.setTenNV(rs.getString(5));
+                tk.setMaTK(rs.getInt(1));
+                tk.setTaiKhoan(rs.getString(2));
+                tk.setMatKhau(rs.getString(3));
+                tk.setLoaiTK(rs.getString(4));
+                tk.setMaNV(rs.getInt(5));
+                tk.setTenNV(rs.getString(6));
                 return tk;
             }
         } catch (Exception e) {
@@ -118,10 +120,11 @@ public class TaiKhoanDAO {
             rs = statement.executeQuery(sql);
             while (rs.next()) {
                 TaiKhoan tk = new TaiKhoan();
-                tk.setTaiKhoan(rs.getString(1));
-                tk.setMatKhau(rs.getString(2));
-                tk.setLoaiTK(rs.getString(3));
-                tk.setMaNV(rs.getString(4));
+                tk.setMaTK(rs.getInt(1));
+                tk.setTaiKhoan(rs.getString(2));
+                tk.setMatKhau(rs.getString(3));
+                tk.setLoaiTK(rs.getString(4));
+                tk.setMaNV(rs.getInt(5));
                 return tk;
             }
         } catch (Exception e) {
@@ -151,7 +154,7 @@ public class TaiKhoanDAO {
                 taikhoan.setTaiKhoan(rs.getString(1));
                 taikhoan.setMatKhau(rs.getString(2));
                 taikhoan.setLoaiTK(rs.getString(3));
-                taikhoan.setMaNV(rs.getString(4));
+                taikhoan.setMaNV(rs.getInt(4));
 
                 return true;
             }
@@ -170,7 +173,7 @@ public class TaiKhoanDAO {
             stsm.setString(1, tk.getTaiKhoan());
             stsm.setString(2, tk.getMatKhau());
             stsm.setString(3, tk.getLoaiTK());
-            stsm.setString(4, tk.getMaNV());
+            stsm.setInt(4, tk.getMaNV());
 
             return stsm.executeUpdate() > 0;
         }
@@ -183,7 +186,7 @@ public class TaiKhoanDAO {
             stsm.setString(4, tk.getTaiKhoan());
             stsm.setString(1, tk.getMatKhau());
             stsm.setString(2, tk.getLoaiTK());
-            stsm.setString(3, tk.getMaNV());
+            stsm.setInt(3, tk.getMaNV());
 
             return stsm.executeUpdate() > 0;
         }
@@ -212,7 +215,7 @@ public class TaiKhoanDAO {
                 tk.setTaiKhoan(rs.getString(1));
                 tk.setMatKhau(rs.getString(2));
                 tk.setLoaiTK(rs.getString(3));
-                tk.setMaNV(rs.getString(4));
+                tk.setTenNV(rs.getString(4));
                 list.add(tk);
                 return list;
             }

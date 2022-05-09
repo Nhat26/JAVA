@@ -42,10 +42,10 @@ public class MenuDAO {
         List<Menu> list = new ArrayList<Menu>();
         Connection con = DatabaseHelper.getDBConnect();
         try {
-            PreparedStatement pstmt = con.prepareStatement("SELECT `loaihang`.`tenlh`, `cthoadon`.`soluong`, `loaihang`.`giathanhpham`, "
-                    + "`cthoadon`.`soluong`*`loaihang`.`giathanhpham` AS totalPrice FROM `cthoadon`, `hoadon`, `loaihang` "
-                    + "WHERE `cthoadon`.`maHD` = `hoadon`.`maHD` AND `cthoadon`.`maLH` = `loaihang`.`maLH` AND "
-                    + "`hoadon`.`status` = 0 AND `hoaodn`.`maban` = ?");
+            PreparedStatement pstmt = con.prepareStatement("SELECT LoaiHang.TenLH, CTHoaDon.SoLuong, LoaiHang.GiaThanhPham, "
+                    + "CTHoaDon.SoLuong*LoaiHang.GiaThanhPham AS totalPrice FROM CTHoaDon, HoaDon, "
+                    + "LoaiHang  WHERE CTHoaDon.MaHD = HoaDon.MaHD AND CTHoaDon.MaLH = LoaiHang.MaLH"
+                    + " AND HoaDon.TinhTrang = 0 AND HoaDon.MaBan = ?");
             pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -58,7 +58,4 @@ public class MenuDAO {
         return list;
     }
 
-    public List<Menu> GetListMenuByTableId(String idTable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }

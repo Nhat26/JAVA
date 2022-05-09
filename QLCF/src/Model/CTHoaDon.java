@@ -9,31 +9,30 @@ package Model;
  * @author THE LUC
  */
 public class CTHoaDon {
-    private String maHD, maLH;
-    private int soLuong;
+    private int maHD, maLH,soLuong;
 
     public CTHoaDon() {
     }
 
-    public CTHoaDon(String maHD, String maLH, int soLuong) {
+    public CTHoaDon(int maHD, int maLH, int soLuong) {
         this.maHD = maHD;
         this.maLH = maLH;
         this.soLuong = soLuong;
     }
 
-    public String getMaHD() {
+    public int getMaHD() {
         return maHD;
     }
 
-    public void setMaHD(String maHD) {
+    public void setMaHD(int maHD) {
         this.maHD = maHD;
     }
 
-    public String getMaLH() {
+    public int getMaLH() {
         return maLH;
     }
 
-    public void setMaLH(String maLH) {
+    public void setMaLH(int maLH) {
         this.maLH = maLH;
     }
 

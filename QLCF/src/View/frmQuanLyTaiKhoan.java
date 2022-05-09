@@ -21,15 +21,16 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
      * Creates new form frmQuanLyTaiKhoan
      */
     DefaultTableModel tableModel;
-    String TaiKhoanSave = null;
+    int idSave = -1;
 
     public frmQuanLyTaiKhoan() {
         initComponents();
         tableModel = new DefaultTableModel();
+        tableModel.addColumn("Mã tài khoản");
         tableModel.addColumn("Tài khoản");
         tableModel.addColumn("Mật khẩu");
         tableModel.addColumn("Loại tài khoản");
-        tableModel.addColumn("Tên nhân viên");
+        tableModel.addColumn("Ma nhân viên");
         tblDisplay.setModel(tableModel);
         LoadTable();
     }
@@ -281,7 +282,7 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
             tk.setTaiKhoan(txtUsername.getText());
             tk.setMatKhau(txtPass.getText());
             tk.setLoaiTK(txtLoaiTK.getText());
-            tk.setMaNV(txtMaNV.getText());
+            tk.setMaNV(Integer.parseInt(txtMaNV.getText()));
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.Add(tk);
             JOptionPane.showMessageDialog(this, "Thêm thành công!");
@@ -342,15 +343,13 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
             // TODO add your handling code here:
             int row = tblDisplay.getSelectedRow();
             List<TaiKhoan> list = TaiKhoanDAO.getInstance().listTaiKhoan();
-//            idSave = list.get(row).getTaiKhoan();
-
-//            txtMaNV.setText(tblDisplay.getValueAt(row, 1) + "");
-//                txtUsername.setText(tblDisplay.getValueAt(row, 2) + "");
-//                txtUsername.disable();
-            txtUsername.setText(list.get(row).getTaiKhoan());
-            txtPass.setText(list.get(row).getMatKhau());
-            txtLoaiTK.setText(list.get(row).getLoaiTK());
-            txtMaNV.setText(list.get(row).getMaNV());
+//          List<Ban> listTable = BanDAO.getInstance().listBan();
+            idSave = list.get(row).getMaTK();
+            txtUsername.setText(tblDisplay.getValueAt(row, 0) + "");
+            txtPass.setText(tblDisplay.getValueAt(row, 1) + "");
+            txtLoaiTK.setText(tblDisplay.getValueAt(row, 2) + "");
+            txtMaNV.setText(tblDisplay.getValueAt(row, 3) + "");
+            
         }//GEN-LAST:event_tblDisplayMouseClicked
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -370,7 +369,7 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
             tk.setTaiKhoan(txtUsername.getText());
             tk.setMatKhau(txtPass.getText());
             tk.setLoaiTK(txtLoaiTK.getText());
-            tk.setMaNV(txtMaNV.getText());
+            tk.setMaNV(Integer.parseInt(txtMaNV.getText()));
 
             TaiKhoanDAO dao = new TaiKhoanDAO();
             dao.Update(tk);
@@ -457,7 +456,7 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
         List<TaiKhoan> list = TaiKhoanDAO.getInstance().listTaiKhoan();
         for (int i = 0; i < list.size(); i++) {
             TaiKhoan taikhoan = list.get(i);
-            Object[] dt = {taikhoan.getTaiKhoan(),taikhoan.getMatKhau(),taikhoan.getLoaiTK(), taikhoan.getMaNV()};
+            Object[] dt = {taikhoan.getMaTK(),taikhoan.getTaiKhoan(),taikhoan.getMatKhau(),taikhoan.getLoaiTK(), taikhoan.getTenNV()};
             tableModel.addRow(dt);
         }
 

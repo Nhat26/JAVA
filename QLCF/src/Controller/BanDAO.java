@@ -44,9 +44,9 @@ public class BanDAO {
             
             while (rs.next()) {
                    Ban ban = new Ban();
-                   ban.setMaBan(rs.getString(1));
+                   ban.setMaBan(rs.getInt(1));
                    ban.setSoBan(rs.getString(2));
-                   ban.setTinhTrang(rs.getString(3));
+                   ban.setTinhTrang(rs.getBoolean(3));
                    list.add(ban);               
             }
         } catch (Exception e) {
@@ -68,9 +68,9 @@ public class BanDAO {
 
         try (
                  Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
-            stsm.setString(1, ban.getMaBan());
+            stsm.setInt(1, ban.getMaBan());
             stsm.setString(2, ban.getSoBan());
-            stsm.setString(3, ban.getTinhTrang());
+            stsm.setBoolean(3, ban.getTinhTrang());
             
 
             return stsm.executeUpdate() > 0;
@@ -84,9 +84,9 @@ public class BanDAO {
                 PreparedStatement stsm = conn.prepareStatement(sql);
                 ) 
         {
-            stsm.setString(3, ban.getMaBan());
+            stsm.setInt(3, ban.getMaBan());
             stsm.setString(1, ban.getSoBan());
-            stsm.setString(2, ban.getTinhTrang());
+            stsm.setBoolean(2, ban.getTinhTrang());
 
             
             return stsm.executeUpdate() > 0;

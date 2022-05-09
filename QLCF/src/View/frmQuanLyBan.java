@@ -27,7 +27,7 @@ public class frmQuanLyBan extends javax.swing.JFrame {
      * Creates new form frmQuanLyBan
      */
     DefaultTableModel tableModel;
-    String idSave = null;
+    int idSave = -1;
 
     public frmQuanLyBan() {
         initComponents();
@@ -251,9 +251,9 @@ public class frmQuanLyBan extends javax.swing.JFrame {
 
         try {
             Ban ban = new Ban();
-            ban.setMaBan(txtMaBan.getText());
+            ban.setMaBan(Integer.parseInt(txtMaBan.getText()));
             ban.setSoBan(txtTableNumber.getText());
-            ban.setTinhTrang(txtNoteTable.getText());
+            ban.setTinhTrang(Boolean.parseBoolean(txtNoteTable.getText()));
             BanDAO dao = new BanDAO();
             dao.Add(ban);
             JOptionPane.showMessageDialog(this, "Thêm thành công!");
@@ -323,9 +323,9 @@ public class frmQuanLyBan extends javax.swing.JFrame {
 
         try{
             Ban ban = new Ban();
-            ban.setMaBan(txtMaBan.getText());
+            ban.setMaBan(Integer.parseInt(txtMaBan.getText()));
             ban.setSoBan(txtTableNumber.getText());
-            ban.setTinhTrang(txtNoteTable.getText());
+            ban.setTinhTrang(Boolean.parseBoolean(txtNoteTable.getText()));
 
             BanDAO dao = new BanDAO();
             dao.Update(ban);

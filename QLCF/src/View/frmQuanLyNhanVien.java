@@ -22,7 +22,7 @@ public class frmQuanLyNhanVien extends javax.swing.JFrame {
      * Creates new form frmThemTaiKhoan
      */
     DefaultTableModel tableModel;
-    String nhanViensave = null;
+    int nhanViensave = -1;
 
     public frmQuanLyNhanVien() {
         initComponents();
@@ -285,7 +285,7 @@ public class frmQuanLyNhanVien extends javax.swing.JFrame {
 
         try {
             NhanVien nv = new NhanVien();
-            nv.setMaNV(txtMaNV.getText());
+            nv.setMaNV(Integer.parseInt(txtMaNV.getText()));
             nv.setTenNV(txtTenNV.getText());
             nv.setGioiTinh(Boolean.parseBoolean(txtGioiTinh.getText()));
             nv.setSDT(Integer.parseInt(txtSDT.getText()));
@@ -359,7 +359,7 @@ public class frmQuanLyNhanVien extends javax.swing.JFrame {
             nv.setSDT(Integer.parseInt(txtSDT.getText()));
             nv.setChucVu(txtChucVu.getText());
             nv.setNgayVaoLam(txtNgayVaoLam.getText()); 
-            nv.setMaNV(txtMaNV.getText());
+            nv.setMaNV(Integer.parseInt(txtMaNV.getText()));
 
             NhanVienDAO dao = new NhanVienDAO();
             dao.Update(nv);
@@ -440,7 +440,7 @@ public class frmQuanLyNhanVien extends javax.swing.JFrame {
         List<NhanVien> list = NhanVienDAO.getInstance().listNhanVien();
         for (int i = 0; i < list.size(); i++) {
             NhanVien nhanVien = list.get(i);
-            Object[] dt = {nhanVien.getMaNV(),nhanVien.getTenNV(),nhanVien.getGioiTinh(), nhanVien.getSDT(), nhanVien.getChucVu()
+            Object[] dt = {nhanVien.getMaNV(),nhanVien.getTenNV(),nhanVien.getGioiTinh()?"Nam":"Nữ", nhanVien.getSDT(), nhanVien.getChucVu()
             , nhanVien.getNgayVaoLam()};
             tableModel.addRow(dt);
         }

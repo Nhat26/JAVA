@@ -269,7 +269,7 @@ public class frmTimTK extends javax.swing.JFrame {
         // TODO add your handling code here:
         frmQuanLyTaiKhoan qld = new frmQuanLyTaiKhoan();
         qld.setVisible(true);
-        dispose();  
+        dispose();   
     }//GEN-LAST:event_txtTroVeActionPerformed
 
     /**

@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class LoaiHangDAO {
     private static LoaiHangDAO instance;
-    
+    LoaiHang loaiHang = new LoaiHang();
     public LoaiHangDAO() {
     }
     
@@ -43,7 +43,7 @@ public class LoaiHangDAO {
             
             while (rs.next()) {
                    LoaiHang ban = new LoaiHang();
-                   ban.setMaLH(rs.getString(1));
+                   ban.setMaLH(rs.getInt(1));
                    ban.setTenLH(rs.getString(2));
                    ban.setGiaThanhPham(rs.getInt(3));
                    list.add(ban);               
@@ -61,6 +61,10 @@ public class LoaiHangDAO {
         }
         return list;
 }
+    
+     public LoaiHang GetLoaiHang() {
+        return loaiHang;
+    }
     
     public ArrayList<String> listTenLoaiHang()
     {
@@ -95,8 +99,9 @@ public class LoaiHangDAO {
         String sql = "INSERT INTO LOAIHANG(MaLH, tenLH, GiaThanhPham) VALUES (?,?,?)";
 
         try (
-                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
-            stsm.setString(1, LH.getMaLH());
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement stsm = conn.prepareStatement(sql);) {
+            stsm.setInt(1, LH.getMaLH());
             stsm.setString(2, LH.getTenLH());
             
             stsm.setInt(3, LH.getGiaThanhPham());
@@ -113,7 +118,7 @@ public class LoaiHangDAO {
                 PreparedStatement stsm = conn.prepareStatement(sql);
                 ) 
         {
-            stsm.setString(3, LH.getMaLH());
+            stsm.setInt(3, LH.getMaLH());
             stsm.setString(1, LH.getTenLH());
             stsm.setInt(2, LH.getGiaThanhPham());
 
@@ -124,9 +129,12 @@ public class LoaiHangDAO {
       public Boolean Delete(String MaLH) throws SQLException {
         String sql = "delete from LoaiHang where MaLH =? ";
         try (
-                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement pstm = conn.prepareStatement(sql);) {
-            pstm.setString(1, MaLH);
-            return pstm.executeUpdate() > 0;
+                Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement pstm = conn.prepareStatement(sql);
+            ) 
+        {
+                pstm.setString(1, MaLH);
+                return pstm.executeUpdate() > 0;
         }
       }
 }

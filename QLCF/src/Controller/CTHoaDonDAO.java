@@ -34,7 +34,7 @@ public class CTHoaDonDAO {
             pstmt.setString(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                CTHoaDon orders = new CTHoaDon(rs.getString(1), rs.getString(2), rs.getInt(3));
+                CTHoaDon orders = new CTHoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3));
                 list.add(orders);
             }
         } catch (SQLException ex) {
@@ -42,12 +42,12 @@ public class CTHoaDonDAO {
         }
         return list;
     }
-    public Boolean Insert(String drinkId, int invoiceId, int count) {
+    public Boolean Insert(int drinkId, int invoiceId, int count) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO CTHOADON(MaHD, MaLH,SOLUONG ) VALUES (?,?,?)");
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO CTHOADON(MaHD, MaLH, SOLUONG ) VALUES (?,?,?)");
             pstmt.setInt(1, invoiceId);
-            pstmt.setString(2, drinkId);
+            pstmt.setInt(2, drinkId);
             pstmt.setInt(3, count);
             int i = pstmt.executeUpdate();
             if (i > 0) {
@@ -64,17 +64,13 @@ public class CTHoaDonDAO {
         
             try {
                     PreparedStatement pstmt;
-                    pstmt = con.prepareStatement("update Ban set TinhTrang=1 where MaBan=? ");
+                    pstmt = con.prepareStatement("update Ban set TinhTrang=N'Đã đặt' where MaBan=? ");
                     pstmt.setString(1,idTable );
                     pstmt.executeUpdate();
                     
             } catch (SQLException ex) {
                     Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
             }
-    }
-
-    public void Insert(String maLH, String MaHD, int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
     

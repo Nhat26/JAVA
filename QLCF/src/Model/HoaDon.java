@@ -10,13 +10,13 @@ package Model;
  * @author nhat
  */
 public class HoaDon {
-    private String maBan,maNV,ngayLapHD,tinhTrang;
-    int tongTien, khuyenMai, maHD;
+    private String maNV,ngayLapHD,tinhTrang;
+    int tongTien, khuyenMai, maHD, maBan;
     
     public HoaDon() {
     }
 
-    public HoaDon(int maHD, String maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, String tinhTrang) {
+    public HoaDon(int maHD, int maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, String tinhTrang) {
         this.maHD = maHD;
         this.maBan = maBan;
         this.maNV = maNV;
@@ -34,11 +34,11 @@ public class HoaDon {
         this.maHD = maHD;
     }
 
-    public String getMaBan() {
+    public int getMaBan() {
         return maBan;
     }
 
-    public void setMaBan(String maBan) {
+    public void setMaBan(int maBan) {
         this.maBan = maBan;
     }
 

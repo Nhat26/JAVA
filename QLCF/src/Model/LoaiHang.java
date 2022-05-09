@@ -9,36 +9,23 @@ package Model;
  * @author hiep4
  */
 public class LoaiHang {
-    private String maLH, tenLH;
-    int giaThanhPham;
-
-    public LoaiHang(String maLH, String tenLH ) {
-        this.maLH = maLH;
-        this.tenLH = tenLH;
-    }
-
+    private String tenLH;
+    private int giaThanhPham , maLH;
+    
     public LoaiHang() {
-    }
-    
-    
-    
-    public LoaiHang(String loaiHang) {
-        this.maLH = loaiHang;
-    }
-
-    public LoaiHang(String maLH, String tenLH, int giaThanhPham) {
+    }  
+    public LoaiHang(int maLH, String tenLH, int giaThanhPham ) {
         this.maLH = maLH;
         this.tenLH = tenLH;
         this.giaThanhPham = giaThanhPham;
     }
-    
-    
+ 
 
-    public String getMaLH() {
+    public int getMaLH() {
         return maLH;
     }
 
-    public void setMaLH(String maLH) {
+    public void setMaLH(int maLH) {
         this.maLH = maLH;
     }
 

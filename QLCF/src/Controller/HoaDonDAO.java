@@ -37,8 +37,6 @@ public class HoaDonDAO {
         Statement statement = null;
         try {
             String sql = "SELECT * FROM HoaDon";
-//            "SELECT taikhoan.tennv, ban.tenban, hoadon.tongtien, hoadon.ngaylapHD"                    
-//                    + "FROM hoadon, ban,taikhoan WHERE `hoadon`.`maban`=`ban`.`maban` AND `hoadon`.`manv`=`taikhoan`.`manv`";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);
@@ -46,7 +44,7 @@ public class HoaDonDAO {
             while (rs.next()) {
                    HoaDon HD = new HoaDon();
                    HD.setMaHD(rs.getInt(1));
-                   HD.setMaBan(rs.getString(2));
+                   HD.setMaBan(rs.getInt(2));
                    HD.setMaNV(rs.getString(3));
                    HD.setTongTien(rs.getInt(4));
                    HD.setNgayLapHD(rs.getString(5));
@@ -83,11 +81,11 @@ public class HoaDonDAO {
         return -1;
     }
     
-    public Boolean Insert(int id, int MaNV) {
+    public Boolean Insert(int MaBan, int MaNV) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
             Statement stmt = con.createStatement();
-            int i = stmt.executeUpdate("INSERT INTO HoaDon(MaNV, MaBan, TinhTrang) VALUES ('" + MaNV + "','" + id + "',0)");
+            int i = stmt.executeUpdate("INSERT INTO HoaDon(MaNV, MaBan, TinhTrang) VALUES ('" + MaNV + "','" + MaBan + "',0)");
             if (i > 0) {
                 return true;
             }
@@ -112,7 +110,7 @@ public class HoaDonDAO {
                 tk.setNgayLapHD(rs.getString(2));
                 tk.setTongTien(rs.getInt(3));
                 tk.setMaNV(rs.getString(4));
-                tk.setMaBan(rs.getString(5));
+                tk.setMaBan(rs.getInt(5));
                 tk.setKhuyenMai(rs.getInt(6));
                 return tk;
             }
@@ -142,9 +140,18 @@ public class HoaDonDAO {
 
         return 1;
     }
-
-    public String GetUncheckInvoiceByTableId(String idTable) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void Update(int id, int totalPrice) {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE HoaDon SET TinhTrang= 1, TongTien = ? WHERE MaHD = ?");
+            pstmt.setInt(1, totalPrice);
+            pstmt.setInt(2, id);
+            pstmt.executeUpdate();
+//                int i = pstmt.executeUpdate();
+//                if (i > 0) {
+//                }
+        } catch (SQLException ex) {
+            Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
 }

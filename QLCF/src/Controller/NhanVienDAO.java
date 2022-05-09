@@ -46,7 +46,7 @@ public class NhanVienDAO {
             
             while (rs.next()) {
                    NhanVien nhanVien = new NhanVien();
-                   nhanVien.setMaNV(rs.getString(1));
+                   nhanVien.setMaNV(rs.getInt(1));
                    nhanVien.setTenNV(rs.getString(2));
                    nhanVien.setGioiTinh(rs.getBoolean(3));
                    nhanVien.setSDT(rs.getInt(4));
@@ -67,12 +67,16 @@ public class NhanVienDAO {
         }
         return list;
 }
+    
+    public NhanVien GetNhanVien() {
+        return nhanVien;
+    }
     public Boolean Add(NhanVien nhanVien) throws SQLException {
         String sql = "INSERT INTO NhanVien(MaNV, TenNV, GioiTinh, SDT, ChucVu, NgayVaoLam) VALUES (?,?,?,?,?,?)";
 
         try (
                  Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
-            stsm.setString(1, nhanVien.getMaNV());
+            stsm.setInt(1, nhanVien.getMaNV());
             stsm.setString(2, nhanVien.getTenNV());
             stsm.setBoolean(3, nhanVien.getGioiTinh());
             stsm.setInt(4, nhanVien.getSDT());
@@ -97,7 +101,7 @@ public class NhanVienDAO {
             stsm.setInt(3, nhanVien.getSDT());
             stsm.setString(4, nhanVien.getChucVu());
             stsm.setString(5, nhanVien.getNgayVaoLam());
-            stsm.setString(6, nhanVien.getMaNV());
+            stsm.setInt(6, nhanVien.getMaNV());
             
             return stsm.executeUpdate() > 0;
         }
@@ -110,5 +114,37 @@ public class NhanVienDAO {
             pstm.setString(1, MaNV);
             return pstm.executeUpdate() > 0;
         }
+    }
+    public List<NhanVien> timListNhanVien(String nhanVien) {
+        List<NhanVien> list = new ArrayList<>();
+        ResultSet rs = null;
+        Statement statement = null;
+        try {
+            String sql = "SELECT * FROM NHANVIEN WHERE TenNV like '%" + nhanVien + "%'";
+            conn = Helper.DatabaseHelper.getDBConnect();
+            statement = conn.createStatement();
+            rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                 NhanVien nv = new NhanVien();
+                 nv.setMaNV(rs.getInt(1));
+                 nv.setTenNV(rs.getString(2));
+                 nv.setGioiTinh(rs.getBoolean(3));
+                 nv.setSDT(rs.getInt(4));
+                 nv.setChucVu(rs.getString(5));
+                 nv.setNgayVaoLam(rs.getString(6));
+                 list.add(nv); 
+                return list;
+            }
+        } catch (Exception e) {
+            System.out.println("Loi khong tim thay nhan vien " + e.toString());
+        } finally {
+            try {
+                rs.close();
+                statement.close();
+                conn.close();
+            } catch (Exception e) {
+            }
+        }
+        return null;
     }
 }

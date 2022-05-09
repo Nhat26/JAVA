@@ -11,6 +11,7 @@ import Controller.HoaDonDAO;
 import Controller.LoaiHangDAO;
 import Controller.MenuDAO;
 import Controller.TaiKhoanDAO;
+import Controller.NhanVienDAO;
 import Helper.ToanCuc;
 import Model.Ban;
 import Model.LoaiHang;
@@ -35,12 +36,11 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         /**
          * Creates new form frmQuanLyThucDon
          */
-        String idTable ="";
-        DefaultComboBoxModel<String> comboBoxModel;
+        int idTable = -1;
+        DefaultComboBoxModel<LoaiHang> comboBoxModel;
         DefaultTableModel tableModelTables;
         DefaultTableModel tableModelDrinks;
         int totalPrice = 0;
-        String dataTranfer;
 
         public frmQuanLyThucDon() {
                 initComponents();
@@ -64,7 +64,6 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 comboBoxModel = new DefaultComboBoxModel<>();
                 cboDrinks.setSelectedIndex(-1);
                 comboBoxModel.setSelectedItem("Chọn loại đồ uống");
-                
                 cboDrinks.setModel(comboBoxModel);
                 loadDrinks();
         }
@@ -254,22 +253,29 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
             // TODO add your handling code here:
-            String MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId((idTable));
+            int MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
             LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
 
-            if (MaHD == null) {
-                    HoaDonDAO.getInstance().Insert((idTable),TaiKhoanDAO.getInstance().getTaiKhoan().getMaNV());
+            if (MaHD == -1) {
+                    HoaDonDAO.getInstance().Insert(idTable , NhanVienDAO.getInstance().GetNhanVien().getMaNV());
                     CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), HoaDonDAO.getInstance().GetMaxIdInvoice(),
                             Integer.parseInt(spnAmount.getValue().toString()));
             } else {
-                    CTHoaDonDAO.getInstance().Insert(MaHD ,drinks.getMaLH(),  Integer.parseInt(spnAmount.getValue().toString()));
+                    CTHoaDonDAO.getInstance().Insert(MaHD,drinks.getMaLH(),  Integer.parseInt(spnAmount.getValue().toString()));
             }
-            CTHoaDonDAO dao = new CTHoaDonDAO();
-            dao.updateStatus(idTable);
+            Connection con = Helper.DatabaseHelper.getDBConnect();
+            PreparedStatement pstmt;
+            try {
+                    pstmt = con.prepareStatement("update Ban set tinhtrang= 1 where MaBan=?");
+                    pstmt.setInt(1, idTable);
+                    pstmt.executeUpdate();
                     displayTables();
-                    //displayTableDrinks();
+                    displayTableDrinks();
                     btnPay.setEnabled(true);
-                    cboDrinks.setSelectedIndex(0);           
+                    cboDrinks.setSelectedIndex(0);
+            } catch (SQLException ex) {
+                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
@@ -287,25 +293,24 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     btnPay.setEnabled(false);
             }
             List<Ban> listTable = BanDAO.getInstance().listBan();
-            listTable.get(row).getMaBan();
             idTable = listTable.get(row).getMaBan();
             displayTableDrinks();
     }//GEN-LAST:event_tblTablesMouseClicked
 
     private void btnPayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayActionPerformed
-//            try {
-//                    // TODO add your handling code here:
-//                    int invoiceId = InvoicesDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
-//                    InvoicesDAO.getInstance().Update(invoiceId, totalPrice);
-//                    Connection con = DBUtility.openConnection();
-//                    PreparedStatement pstmt = con.prepareStatement("update tables set status=0 where ID=?");
-//                    pstmt.setInt(1, idTable);
-//                    pstmt.executeUpdate();
-//                    displayTables();
-//                    displayTableDrinks();
-//            } catch (SQLException ex) {
-//                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+                    // TODO add your handling code here:
+                    int invoiceId = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
+                    HoaDonDAO.getInstance().Update(invoiceId, totalPrice);
+                    Connection con = Helper.DatabaseHelper.getDBConnect();
+                    PreparedStatement pstmt = con.prepareStatement("update Ban set tinhtrang=0 where ID=?");
+                    pstmt.setInt(1, idTable);
+                    pstmt.executeUpdate();
+                    displayTables();
+                    displayTableDrinks();
+            } catch (SQLException ex) {
+                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }//GEN-LAST:event_btnPayActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -383,7 +388,6 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
         private void displayTableDrinks() {
                 tableModelDrinks.setRowCount(0);
-
                 List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
                 for (int i = 0; i < listMenu.size(); i++) {
                         Menu menu = listMenu.get(i);
@@ -395,11 +399,22 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
        }
 
         private void loadDrinks() {
-            List<String>  list = new ArrayList<>();
-            LoaiHangDAO dao = new LoaiHangDAO();
-            list = dao.listTenLoaiHang();
-            for(String drinks : list){
-                comboBoxModel.addElement(drinks);
-            }
+//            List<String>  list = new ArrayList<>();
+//            LoaiHangDAO dao = new LoaiHangDAO();
+//            list = dao.listTenLoaiHang();
+//            for(LoaiHang drinks : list){
+//                comboBoxModel.addElement(drinks);
+//            }
+//            
+
+//            List<String>  list = new ArrayList<>();
+//            LoaiHangDAO dao = new LoaiHangDAO();
+//            list = dao.listTenLoaiHang();
+//            for(String drinks : list){
+//                comboBoxModel.addElement(drinks);
+                List<LoaiHang> listDrink = LoaiHangDAO.getInstance().listLoaiHang();
+                for (LoaiHang drinks : listDrink) {
+                comboBoxModel.addElement(drinks);           
+                }
         }
 }
