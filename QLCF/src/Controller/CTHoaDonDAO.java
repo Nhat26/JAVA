@@ -26,12 +26,12 @@ public class CTHoaDonDAO {
         return instance;
     }
     
-    public List<CTHoaDon> ListOrder(String id) {
+    public List<CTHoaDon> ListOrder(int id) {
         List<CTHoaDon> list = new ArrayList<CTHoaDon>();
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM `cthoadon` WHERE `MAHD` = ?");
-            pstmt.setString(1, id);
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM CTHoaDon WHERE MAHD = ?");
+            pstmt.setInt(1, id);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 CTHoaDon orders = new CTHoaDon(rs.getInt(1), rs.getInt(2), rs.getInt(3));
@@ -42,10 +42,10 @@ public class CTHoaDonDAO {
         }
         return list;
     }
-    public Boolean Insert(int drinkId, int invoiceId, int count) {
+    public Boolean Insert( int invoiceId,int drinkId, int count) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
-            PreparedStatement pstmt = con.prepareStatement("INSERT INTO CTHOADON(MaHD, MaLH, SOLUONG ) VALUES (?,?,?)");
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO CTHOADON(MaHD, MaLH, SOLUONG) VALUES (?,?,?)");
             pstmt.setInt(1, invoiceId);
             pstmt.setInt(2, drinkId);
             pstmt.setInt(3, count);
@@ -54,23 +54,27 @@ public class CTHoaDonDAO {
                 return true;
             }
         } catch (SQLException ex) {
-           Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
+           Logger.getLogger(MenuDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public Boolean Update(int MAHD,int MALH,int count) {
+        Connection con = Helper.DatabaseHelper.getDBConnect();
+        try {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE CTHOADON set SOLUONG =? WHERE MAHD =? AND MALH =?");
+            pstmt.setInt(1, count);
+            pstmt.setInt(2, MAHD);
+            pstmt.setInt(3, MALH);
+            int i = pstmt.executeUpdate();
+            if (i > 0) {
+                return true;
+            }
+        } catch (SQLException ex) {
+           Logger.getLogger(MenuDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
 
-    public void updateStatus(String idTable) {
-        Connection con = Helper.DatabaseHelper.getDBConnect();
-        
-            try {
-                    PreparedStatement pstmt;
-                    pstmt = con.prepareStatement("update Ban set TinhTrang=N'Đã đặt' where MaBan=? ");
-                    pstmt.setString(1,idTable );
-                    pstmt.executeUpdate();
-                    
-            } catch (SQLException ex) {
-                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
+    
 }
     

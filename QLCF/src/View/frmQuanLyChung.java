@@ -184,6 +184,10 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
         // TODO add your handling code here:
+        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+            return;
+        }
         frmQuanLyThongKe qltk = new frmQuanLyThongKe();
         qltk.setVisible(true);
 //        dispose();
@@ -204,6 +208,10 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnQLTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLTKActionPerformed
         // TODO add your handling code here:
+        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+            return;
+        }
         frmQuanLyTaiKhoan qlo = new frmQuanLyTaiKhoan();
         qlo.setVisible(true);
 //        dispose();
@@ -211,10 +219,10 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-//        if (!TaiKhoanDAO.getInstance().get1TaiKhoan().getTaiKhoan().equals("admin")) {
-//            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
-//            return;
-//        }
+        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+            return;
+        }
         frmQuanLyTaiKhoan ttk = new frmQuanLyTaiKhoan();
         ttk.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -235,12 +243,20 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrder1ActionPerformed
         // TODO add your handling code here:
+        if (!TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("2") && TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("2")){
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+            return;
+        }
         frmQuanLyThucDon frm = new frmQuanLyThucDon();
         frm.setVisible(true);
     }//GEN-LAST:event_btnOrder1ActionPerformed
 
     private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
         // TODO add your handling code here:
+        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+            JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
+            return;
+        }
         frmQuanLyNhanVien qld = new frmQuanLyNhanVien();
         qld.setVisible(true);
     }//GEN-LAST:event_btnQLNVActionPerformed

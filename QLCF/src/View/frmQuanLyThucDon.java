@@ -17,14 +17,17 @@ import Model.Ban;
 import Model.LoaiHang;
 import Model.HoaDon;
 import Model.Menu;
+import Model.NhanVien;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -37,12 +40,17 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
          * Creates new form frmQuanLyThucDon
          */
         int idTable = -1;
-        DefaultComboBoxModel<LoaiHang> comboBoxModel;
+        
+//      DefaultComboBoxModel<LoaiHang> comboBoxModel;
+//      DefaultComboBoxModel<NhanVien> comboBoxModel1;
+
+        
         DefaultTableModel tableModelTables;
         DefaultTableModel tableModelDrinks;
         int totalPrice = 0;
 
-        public frmQuanLyThucDon() {
+        public frmQuanLyThucDon() 
+        {
                 initComponents();
                 ToanCuc tc = new ToanCuc();
                 txtDisplay.setText("Xin chào nhân viên: " +tc.getTen());
@@ -61,11 +69,20 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 tableModelDrinks.addColumn("Thành tiền");
                 tblOrder.setModel(tableModelDrinks);
 
-                comboBoxModel = new DefaultComboBoxModel<>();
-                cboDrinks.setSelectedIndex(-1);
-                comboBoxModel.setSelectedItem("Chọn loại đồ uống");
-                cboDrinks.setModel(comboBoxModel);
                 loadDrinks();
+                loadNhanVien();
+
+//                comboBoxModel = new DefaultComboBoxModel<>();
+//                LoaiHang mChon = new LoaiHang(-1, "---- Chọn đồ uống ----");
+//                comboBoxModel.addElement(mChon);
+//                cboDrinks.setModel(comboBoxModel);
+//                loadDrinks();
+//                
+//                comboBoxModel1 = new DefaultComboBoxModel<>();
+//                NhanVien nChon = new NhanVien(-1, "---- Chọn nhân viên ----");
+//                comboBoxModel1.addElement(nChon);
+//                cboNhanVien.setModel(comboBoxModel1);
+//                loadNhanVien();
         }
 
 
@@ -92,6 +109,8 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         txtTotalPrice = new javax.swing.JTextField();
         btnHome = new javax.swing.JButton();
         txtDisplay = new javax.swing.JLabel();
+        cboNhanVien = new javax.swing.JComboBox<>();
+        btnSua = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Quản lý bán hàng");
@@ -168,6 +187,11 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         txtTotalPrice.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTotalPrice.setText("0");
         txtTotalPrice.setEnabled(false);
+        txtTotalPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalPriceActionPerformed(evt);
+            }
+        });
 
         btnHome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GiaoDien/Icon/Go Back_50px.png"))); // NOI18N
@@ -181,6 +205,24 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
         txtDisplay.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtDisplay.setText("jLabel3");
 
+        cboNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboNhanVien.setSelectedIndex(-1);
+        cboNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboNhanVienActionPerformed(evt);
+            }
+        });
+
+        btnSua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GiaoDien/Icon/Plus_50px.png"))); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.setEnabled(false);
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -193,27 +235,33 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPay)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(28, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cboDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(spnAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(229, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(71, 71, 71)
-                                .addComponent(txtDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                                .addComponent(txtDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(cboNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(155, 155, 155)
+                        .addComponent(btnPay)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,28 +271,33 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(5, 5, 5)
                                 .addComponent(cboDrinks, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(spnAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnPay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(spnAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cboNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnAdd)
+                                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(13, 13, 13)
+                                .addComponent(btnPay)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(91, 91, 91))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
-                    .addComponent(jScrollPane1))
-                .addContainerGap(142, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         pack();
@@ -253,15 +306,18 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
             // TODO add your handling code here:
+            
             int MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
             LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
+            NhanVien nv = (NhanVien) cboNhanVien.getSelectedItem();
 
             if (MaHD == -1) {
-                    HoaDonDAO.getInstance().Insert(idTable , NhanVienDAO.getInstance().GetNhanVien().getMaNV());
-                    CTHoaDonDAO.getInstance().Insert(drinks.getMaLH(), HoaDonDAO.getInstance().GetMaxIdInvoice(),
+                    HoaDonDAO.getInstance().Insert(idTable , nv.getMaNV());
+                    CTHoaDonDAO.getInstance().Insert(HoaDonDAO.getInstance().GetMaxIdInvoice(),drinks.getMaLH(), 
                             Integer.parseInt(spnAmount.getValue().toString()));
             } else {
-                    CTHoaDonDAO.getInstance().Insert(MaHD,drinks.getMaLH(),  Integer.parseInt(spnAmount.getValue().toString()));
+                    CTHoaDonDAO.getInstance().Insert(MaHD,drinks.getMaLH(),Integer.parseInt(spnAmount.getValue().toString()));
+                    
             }
             Connection con = Helper.DatabaseHelper.getDBConnect();
             PreparedStatement pstmt;
@@ -272,7 +328,9 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     displayTables();
                     displayTableDrinks();
                     btnPay.setEnabled(true);
+                    btnSua.setEnabled(true);
                     cboDrinks.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thành công!!.");
             } catch (SQLException ex) {
                     Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -280,13 +338,15 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
 
     private void cboDrinksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDrinksActionPerformed
             // TODO add your handling code here:
-
+            
+            
     }//GEN-LAST:event_cboDrinksActionPerformed
 
     private void tblTablesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTablesMouseClicked
             // TODO add your handling code here:
             int row = tblTables.getSelectedRow();
             btnAdd.setEnabled(true);
+            btnSua.setEnabled(true);
             if ((tblTables.getValueAt(row, 2) + "").equals("Đã đặt")) {
                     btnPay.setEnabled(true);
             } else {
@@ -301,13 +361,14 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
             try {
                     // TODO add your handling code here:
                     int invoiceId = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
-                    HoaDonDAO.getInstance().Update(invoiceId, totalPrice);
+                    HoaDonDAO.getInstance().Update(invoiceId, Integer.parseInt(txtTotalPrice.getText().toString()));
                     Connection con = Helper.DatabaseHelper.getDBConnect();
-                    PreparedStatement pstmt = con.prepareStatement("update Ban set tinhtrang=0 where ID=?");
+                    PreparedStatement pstmt = con.prepareStatement("update Ban set tinhtrang=0 where maban=?");
                     pstmt.setInt(1, idTable);
                     pstmt.executeUpdate();
                     displayTables();
                     displayTableDrinks();
+                    JOptionPane.showMessageDialog(rootPane, "Đã thanh toán.");
             } catch (SQLException ex) {
                     Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -317,6 +378,39 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
             
             dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnHomeActionPerformed
+
+    private void txtTotalPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalPriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalPriceActionPerformed
+
+    private void cboNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNhanVienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboNhanVienActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        int MaHD = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
+            LoaiHang drinks = (LoaiHang) cboDrinks.getSelectedItem();
+            NhanVien nv = (NhanVien) cboNhanVien.getSelectedItem();
+
+            if (MaHD != -1) {
+                    CTHoaDonDAO.getInstance().Update(MaHD,drinks.getMaLH(),Integer.parseInt(spnAmount.getValue().toString()));
+            }
+            Connection con = Helper.DatabaseHelper.getDBConnect();
+            PreparedStatement pstmt;
+            try {
+                    pstmt = con.prepareStatement("update Ban set tinhtrang= 1 where MaBan=?");
+                    pstmt.setInt(1, idTable);
+                    pstmt.executeUpdate();
+                    displayTables();
+                    displayTableDrinks();
+                    btnPay.setEnabled(true);
+                    cboDrinks.setSelectedIndex(0);
+                    JOptionPane.showMessageDialog(rootPane, "Sửa hóa đơn thành công!!.");
+            } catch (SQLException ex) {
+                    Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+    }//GEN-LAST:event_btnSuaActionPerformed
 
         /**
          * @param args the command line arguments
@@ -364,7 +458,9 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnPay;
+    private javax.swing.JButton btnSua;
     private javax.swing.JComboBox cboDrinks;
+    private javax.swing.JComboBox<Object> cboNhanVien;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -381,40 +477,91 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                 List<Ban> listTable = BanDAO.getInstance().listBan();
                 for (int i = 0; i < listTable.size(); i++) {
                         Ban tables = listTable.get(i);
-                        Object[] dt = {tables.getMaBan(), tables.getSoBan(), tables.getTinhTrang()};
+                        Object[] dt = {tables.getMaBan(), tables.getSoBan(), tables.getTinhTrang()?"Đã đặt":"Trống"};
                         tableModelTables.addRow(dt);
                 }
         }
 
         private void displayTableDrinks() {
                 tableModelDrinks.setRowCount(0);
+                int totalPrice =0;
                 List<Menu> listMenu = MenuDAO.getInstance().GetListMenuByTableId(idTable);
                 for (int i = 0; i < listMenu.size(); i++) {
                         Menu menu = listMenu.get(i);
                         Object[] dt = {i + 1, menu.getDrinkName(), menu.getPrice(), menu.getCount(), menu.getTotalPrice()};
                         totalPrice += menu.getTotalPrice();
                         tableModelDrinks.addRow(dt);
-                }
+                }               
                 txtTotalPrice.setText(totalPrice + "");
        }
-
-        private void loadDrinks() {
-//            List<String>  list = new ArrayList<>();
-//            LoaiHangDAO dao = new LoaiHangDAO();
-//            list = dao.listTenLoaiHang();
-//            for(LoaiHang drinks : list){
-//                comboBoxModel.addElement(drinks);
-//            }
+        
+        private void loadDrinks(){
+            LoaiHangDAO loaiHang = new LoaiHangDAO();
+            List<LoaiHang> list = loaiHang.getAllclasses();
+            cboDrinks.removeAllItems();
+            cboDrinks.addItem("Chọn đồ uống");
+            list.forEach(o -> {
+                cboDrinks.addItem(o);
+            });
+//            try{
+//                Connection con = Helper.DatabaseHelper.getDBConnect();
+//                String sql = "Select * FROM loaihang";
+//                PreparedStatement pstmt = con.prepareStatement(sql);
+//                ResultSet rs = pstmt.executeQuery();
+//                cboDrinks.removeAllItems();
+//                cboDrinks.addItem("Chọn đồ uống");
+//                while (rs.next())
+//                    {
+//                        cboDrinks.addItem(rs.getString("tenLH"));
+//                    }
 //            
-
-//            List<String>  list = new ArrayList<>();
-//            LoaiHangDAO dao = new LoaiHangDAO();
-//            list = dao.listTenLoaiHang();
-//            for(String drinks : list){
-//                comboBoxModel.addElement(drinks);
-                List<LoaiHang> listDrink = LoaiHangDAO.getInstance().listLoaiHang();
-                for (LoaiHang drinks : listDrink) {
-                comboBoxModel.addElement(drinks);           
-                }
+//        }catch (Exception e)
+//            {
+//                JOptionPane.showMessageDialog(this, e.getMessage());
+//                e.printStackTrace();
+//            }
         }
+        
+        private void loadNhanVien(){
+            NhanVienDAO nhanVien = new NhanVienDAO();
+            List<NhanVien> list = nhanVien.getAllclasses();
+            cboNhanVien.removeAllItems();
+            cboNhanVien.addItem("Chọn nhân viên");
+            list.forEach(o -> {
+                cboNhanVien.addItem(o);
+            });
+//            try{
+//                Connection con = Helper.DatabaseHelper.getDBConnect();
+//                String sql = "Select * FROM NhanVien";
+//                PreparedStatement pstmt = con.prepareStatement(sql);
+//                ResultSet rs = pstmt.executeQuery();
+//                cboNhanVien.removeAllItems();
+//                cboNhanVien.addItem("Chọn nhân viên");
+//                while (rs.next())
+//                    {
+//                        cboNhanVien.addItem(rs.getString("tenNV"));
+//                    }
+//            
+//        }catch (Exception e)
+//            {
+//                JOptionPane.showMessageDialog(this, e.getMessage());
+//                e.printStackTrace();
+//            }
+        }
+        
+        
+//                private void loadDrinks() {
+//                List<LoaiHang> listDrink = LoaiHangDAO.getInstance().listLoaiHang();
+//                for (LoaiHang drinks : listDrink) {
+//                        comboBoxModel.addElement(drinks);
+//                }
+//        }
+//                
+//                private void loadNhanVien() {
+//                List<NhanVien> listNhanVien = NhanVienDAO.getInstance().listNhanVien();
+//                for (NhanVien nhanvien : listNhanVien) {
+//                        comboBoxModel1.addElement(nhanvien);
+//                }
+//        }
+        
 }

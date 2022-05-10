@@ -71,11 +71,15 @@ public class NhanVienDAO {
     public NhanVien GetNhanVien() {
         return nhanVien;
     }
+    
+    
+    
     public Boolean Add(NhanVien nhanVien) throws SQLException {
         String sql = "INSERT INTO NhanVien(MaNV, TenNV, GioiTinh, SDT, ChucVu, NgayVaoLam) VALUES (?,?,?,?,?,?)";
 
         try (
-                 Connection conn = Helper.DatabaseHelper.getDBConnect();  PreparedStatement stsm = conn.prepareStatement(sql);) {
+                 Connection conn = Helper.DatabaseHelper.getDBConnect();  
+                PreparedStatement stsm = conn.prepareStatement(sql);) {
             stsm.setInt(1, nhanVien.getMaNV());
             stsm.setString(2, nhanVien.getTenNV());
             stsm.setBoolean(3, nhanVien.getGioiTinh());
@@ -147,4 +151,26 @@ public class NhanVienDAO {
         }
         return null;
     }
+    
+    public List<NhanVien> getAllclasses()
+            {
+                ResultSet rs = null;
+                Statement statement = null;
+                try{
+                    String sql = "SELECT * FROM NHANVIEN ";
+                    conn = Helper.DatabaseHelper.getDBConnect();
+                    statement = conn.createStatement();
+                    rs = statement.executeQuery(sql);
+                    List<NhanVien> list = new ArrayList<>();
+                    while(rs.next())
+                        {
+                            list.add(new NhanVien(rs.getInt("maNV"), rs.getString("tenNV")));               
+                        }
+                    return list;
+                }catch(Exception e)
+                    {
+                        System.out.println("Loi khong tim thay nhan vien " + e.toString());
+                    }
+                return null;
+            }
 }

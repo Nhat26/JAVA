@@ -19,7 +19,11 @@ public class LoaiHang {
         this.tenLH = tenLH;
         this.giaThanhPham = giaThanhPham;
     }
- 
+    
+    public LoaiHang(int maLH, String tenLH) {
+        this.maLH = maLH;
+        this.tenLH = tenLH;
+    }
 
     public int getMaLH() {
         return maLH;
@@ -44,11 +48,12 @@ public class LoaiHang {
         this.giaThanhPham = giaThanhPham;
     }
 
-
-
     @Override
     public String toString() {
-        return "LoaHang{" + "maLH ="  + maLH + ", tenLH=" + tenLH + ", giaThanhPham=" + giaThanhPham + '}';
+        return tenLH.toString();
     }
+
+
+
     
 }

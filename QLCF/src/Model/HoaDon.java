@@ -5,18 +5,21 @@
  */
 package Model;
 
+import java.sql.Timestamp;
+
 /**
  *
  * @author nhat
  */
 public class HoaDon {
-    private String maNV,ngayLapHD,tinhTrang;
-    int tongTien, khuyenMai, maHD, maBan;
+    private String tinhTrang;
+    private int tongTien, khuyenMai, maHD, maBan,maNV;
+    private  Timestamp ngayLapHD;
     
     public HoaDon() {
     }
 
-    public HoaDon(int maHD, int maBan, String maNV, String ngayLapHD, int tongTien, int khuyenMai, String tinhTrang) {
+    public HoaDon(int maHD, int maBan, int maNV, Timestamp ngayLapHD, int tongTien, int khuyenMai, String tinhTrang) {
         this.maHD = maHD;
         this.maBan = maBan;
         this.maNV = maNV;
@@ -42,19 +45,19 @@ public class HoaDon {
         this.maBan = maBan;
     }
 
-    public String getMaNV() {
+    public int getMaNV() {
         return maNV;
     }
 
-    public void setMaNV(String maNV) {
+    public void setMaNV(int maNV) {
         this.maNV = maNV;
     }
 
-    public String getNgayLapHD() {
+    public Timestamp getNgayLapHD() {
         return ngayLapHD;
     }
 
-    public void setNgayLapHD(String ngayLapHD) {
+    public void setNgayLapHD(Timestamp ngayLapHD) {
         this.ngayLapHD = ngayLapHD;
     }
 

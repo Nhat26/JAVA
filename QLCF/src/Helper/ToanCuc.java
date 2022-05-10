@@ -4,10 +4,6 @@
  */
 package Helper;
 
-/**
- *
- * @author THE LUC
- */
 public class ToanCuc {
     public static String Ten = "";
 
@@ -20,9 +16,6 @@ public class ToanCuc {
 
     public static void setTen(String Ten) {
         ToanCuc.Ten = Ten;
-    }
-    
-    
-    
+    }  
     
 }

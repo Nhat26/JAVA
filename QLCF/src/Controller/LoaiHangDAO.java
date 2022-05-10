@@ -68,10 +68,10 @@ public class LoaiHangDAO {
     
     public ArrayList<String> listTenLoaiHang()
     {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<String>();
         ResultSet rs = null;
         Statement statement = null;
-        try {
+        try { 
             String sql = "SELECT tenLH FROM LoaiHang";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
@@ -83,16 +83,10 @@ public class LoaiHangDAO {
         } catch (Exception e) {
             System.out.println("Loi "+ e.toString());
         }
-        finally{
-            try {
-                rs.close();
-                statement.close();
-                conn.close();   
-            } catch (Exception e) {
-            }
-        }
         return list;
 }
+    
+    
     
     public Boolean Add(LoaiHang LH) throws SQLException {
 //        Connection con = Helper.DatabaseHelper.getDBConnect();
@@ -137,4 +131,27 @@ public class LoaiHangDAO {
                 return pstm.executeUpdate() > 0;
         }
       }
+      
+      public List<LoaiHang> getAllclasses()
+            {
+                ResultSet rs = null;
+                Statement statement = null;
+                try{
+                    String sql = "SELECT * FROM LoaiHang ";
+                    conn = Helper.DatabaseHelper.getDBConnect();
+                    statement = conn.createStatement();
+                    rs = statement.executeQuery(sql);
+                    List<LoaiHang> list = new ArrayList<>();
+                    while(rs.next())
+                        {
+                            list.add(new LoaiHang(rs.getInt("maLH"), rs.getString("tenLH")));
+                            
+                        }
+                    return list;
+                }catch(Exception e)
+                    {
+                        System.out.println("Loi khong tim thay loai hang " + e.toString());
+                    }
+                return null;
+            }
 }

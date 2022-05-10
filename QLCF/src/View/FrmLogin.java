@@ -182,6 +182,8 @@ public class FrmLogin extends javax.swing.JFrame {
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
+        FrmDoiMatKhau show = new FrmDoiMatKhau();
+        show.setVisible(true);
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed

@@ -4,6 +4,7 @@
  */
 package Controller;
 
+import Model.NhanVien;
 import Model.TaiKhoan;
 import java.sql.*;
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ public class TaiKhoanDAO {
 
     private static TaiKhoanDAO instance;
     TaiKhoan taikhoan = new TaiKhoan();
-
     public static TaiKhoanDAO getInstance() {
         if (instance == null) {
             instance = new TaiKhoanDAO();
@@ -72,6 +72,9 @@ public class TaiKhoanDAO {
         return taiKhoan;
     }
     
+    public TaiKhoan GetAccount() {
+        return taikhoan;
+    }
     //
     public TaiKhoan get1TaiKhoan(String taiKhoan) {
 

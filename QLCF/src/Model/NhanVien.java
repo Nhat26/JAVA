@@ -10,10 +10,15 @@ package Model;
  */
 public class NhanVien {
     private String tenNV,chucVu,ngayVaoLam;
-    int maNV,sDT;
-    boolean gioiTinh;
+    private int maNV,sDT;
+    private boolean gioiTinh;
     
     public NhanVien() {
+    }
+    
+    public NhanVien(int maNV, String tenNV) {
+        this.maNV = maNV;
+        this.tenNV = tenNV;
     }
 
     public NhanVien(int maNV, String tenNV, int sDT, String chucVu, String ngayVaoLam, boolean gioiTinh) {
@@ -72,10 +77,12 @@ public class NhanVien {
 
     public void setGioiTinh(boolean gioiTinh) {
         this.gioiTinh = gioiTinh;
-    }
+    } 
 
     @Override
     public String toString() {
-        return "NhanVien{" + "maNV=" + maNV + ", tenNV=" + tenNV + ", sDT=" + sDT + ", chucVu=" + chucVu + ", gioiTinh=" + gioiTinh + ", ngayVaoLam=" + ngayVaoLam + '}';
+        return tenNV.toString();
     }
+
+  
 }

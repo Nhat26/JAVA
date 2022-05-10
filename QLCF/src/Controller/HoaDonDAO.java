@@ -5,19 +5,21 @@
  */
 package Controller;
 import Model.HoaDon;
+import Model.NhanVien;
 import View.frmQuanLyBan;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Timestamp;
 /**
  *
  * @author nhat
  */
 public class HoaDonDAO {
     private static HoaDonDAO instance;
-    
+    HoaDon hoaDon = new HoaDon();
     public HoaDonDAO() {
     }
     
@@ -45,9 +47,9 @@ public class HoaDonDAO {
                    HoaDon HD = new HoaDon();
                    HD.setMaHD(rs.getInt(1));
                    HD.setMaBan(rs.getInt(2));
-                   HD.setMaNV(rs.getString(3));
+                   HD.setMaNV(rs.getInt(3));
                    HD.setTongTien(rs.getInt(4));
-                   HD.setNgayLapHD(rs.getString(5));
+                   HD.setNgayLapHD(rs.getTimestamp(5));
                    HD.setKhuyenMai(rs.getInt(6));
                    list.add(HD);               
             }
@@ -65,11 +67,15 @@ public class HoaDonDAO {
         return list;
     }
     
-    public int GetUncheckInvoiceByTableId(int id) {
+     public HoaDon GetNhanVien() {
+        return hoaDon;
+    }
+    
+    public int GetUncheckInvoiceByTableId(int maHD) {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM HoaDon WHERE MaBan = ? AND TinhTrang = 0");
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, maHD);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
 //                Invoices invoices = new Invoices(rs.getInt(1), rs.getInt(2), rs.getTimestamp(3), rs.getInt(4), rs.getInt(5), rs.getInt(6));
@@ -85,7 +91,7 @@ public class HoaDonDAO {
         Connection con = Helper.DatabaseHelper.getDBConnect();
         try {
             Statement stmt = con.createStatement();
-            int i = stmt.executeUpdate("INSERT INTO HoaDon(MaNV, MaBan, TinhTrang) VALUES ('" + MaNV + "','" + MaBan + "',0)");
+            int i = stmt.executeUpdate("INSERT INTO HoaDon(MaBan, MaNV, NgayLapHD ,TinhTrang) VALUES ('" + MaBan + "','" + MaNV + "',GETDATE(),0)");
             if (i > 0) {
                 return true;
             }
@@ -94,6 +100,7 @@ public class HoaDonDAO {
         }
         return false;
     }
+      
     
     
     public HoaDon get1HD(String maHD){
@@ -107,9 +114,9 @@ public class HoaDonDAO {
             while (rs.next()) {
                 HoaDon tk = new HoaDon();
                 tk.setMaHD(rs.getInt(1));
-                tk.setNgayLapHD(rs.getString(2));
+                tk.setNgayLapHD(rs.getTimestamp(2));
                 tk.setTongTien(rs.getInt(3));
-                tk.setMaNV(rs.getString(4));
+                tk.setMaNV(rs.getInt(4));
                 tk.setMaBan(rs.getInt(5));
                 tk.setKhuyenMai(rs.getInt(6));
                 return tk;
@@ -154,4 +161,5 @@ public class HoaDonDAO {
             Logger.getLogger(HoaDonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 }
