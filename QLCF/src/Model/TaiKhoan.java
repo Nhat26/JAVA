@@ -82,7 +82,7 @@ public class TaiKhoan {
 
     @Override
     public String toString() {
-        return super.toString(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return "TaiKhoan{" + "taiKhoan=" + taiKhoan + ", matKhau=" + matKhau + ", loaiTK=" + loaiTK + ", tenNV=" + tenNV + ", maTK=" + maTK + ", maNV=" + maNV + '}';
     }
     
     

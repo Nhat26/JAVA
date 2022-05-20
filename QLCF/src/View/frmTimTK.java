@@ -231,8 +231,8 @@ public class frmTimTK extends javax.swing.JFrame {
             int i = 0;
             Object dataRow[] = new Object[5];
             dataRow[0] = i+1;
-            dataRow[1] = tk.getTaiKhoan();
-            dataRow[2] = tk.getMatKhau();
+            dataRow[1] = tk.getMatKhau();
+            dataRow[2] = tk.getTaiKhoan();
             dataRow[3] = tk.getLoaiTK();
             dataRow[4] = tk.getMaNV();
             tableModel.addRow(dataRow);

@@ -330,7 +330,7 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     btnPay.setEnabled(true);
                     btnSua.setEnabled(true);
                     cboDrinks.setSelectedIndex(0);
-                    JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thành công!!.");
+                    JOptionPane.showMessageDialog(rootPane, "Thêm đồ uống thành công!!.");
             } catch (SQLException ex) {
                     Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -362,13 +362,13 @@ public class frmQuanLyThucDon extends javax.swing.JFrame {
                     // TODO add your handling code here:
                     int invoiceId = HoaDonDAO.getInstance().GetUncheckInvoiceByTableId(idTable);
                     HoaDonDAO.getInstance().Update(invoiceId, Integer.parseInt(txtTotalPrice.getText().toString()));
+                    JOptionPane.showMessageDialog(rootPane,"Tổng hóa đơn: " + txtTotalPrice.getText());
                     Connection con = Helper.DatabaseHelper.getDBConnect();
                     PreparedStatement pstmt = con.prepareStatement("update Ban set tinhtrang=0 where maban=?");
                     pstmt.setInt(1, idTable);
                     pstmt.executeUpdate();
                     displayTables();
                     displayTableDrinks();
-                    JOptionPane.showMessageDialog(rootPane, "Đã thanh toán.");
             } catch (SQLException ex) {
                     Logger.getLogger(frmQuanLyThucDon.class.getName()).log(Level.SEVERE, null, ex);
             }

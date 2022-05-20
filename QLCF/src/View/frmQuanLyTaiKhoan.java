@@ -22,15 +22,15 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
      */
     DefaultTableModel tableModel;
     int idSave = -1;
+    
 
     public frmQuanLyTaiKhoan() {
         initComponents();
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("Mã tài khoản");
         tableModel.addColumn("Tài khoản");
         tableModel.addColumn("Mật khẩu");
         tableModel.addColumn("Loại tài khoản");
-        tableModel.addColumn("Ma nhân viên");
+        tableModel.addColumn("Mã nhân viên");
         tblDisplay.setModel(tableModel);
         LoadTable();
     }
@@ -86,6 +86,7 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
         jLabel5.setText("Xác nhận mật khẩu:");
 
         txtUsername.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtUsername.setActionCommand("<Not Set>");
 
         btnAdd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GiaoDien/Icon/Plus_50px.png"))); // NOI18N
@@ -343,7 +344,6 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
             // TODO add your handling code here:
             int row = tblDisplay.getSelectedRow();
             List<TaiKhoan> list = TaiKhoanDAO.getInstance().listTaiKhoan();
-//          List<Ban> listTable = BanDAO.getInstance().listBan();
             idSave = list.get(row).getMaTK();
             txtUsername.setText(tblDisplay.getValueAt(row, 0) + "");
             txtPass.setText(tblDisplay.getValueAt(row, 1) + "");
@@ -456,7 +456,7 @@ public class frmQuanLyTaiKhoan extends javax.swing.JFrame {
         List<TaiKhoan> list = TaiKhoanDAO.getInstance().listTaiKhoan();
         for (int i = 0; i < list.size(); i++) {
             TaiKhoan taikhoan = list.get(i);
-            Object[] dt = {taikhoan.getMaTK(),taikhoan.getTaiKhoan(),taikhoan.getMatKhau(),taikhoan.getLoaiTK(), taikhoan.getTenNV()};
+            Object[] dt = {taikhoan.getTaiKhoan(),taikhoan.getMatKhau(),taikhoan.getLoaiTK(), taikhoan.getTenNV()};
             tableModel.addRow(dt);
         }
 

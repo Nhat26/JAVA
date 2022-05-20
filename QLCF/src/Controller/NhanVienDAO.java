@@ -124,7 +124,7 @@ public class NhanVienDAO {
         ResultSet rs = null;
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM NHANVIEN WHERE TenNV like '%" + nhanVien + "%'";
+            String sql = "SELECT * FROM NHANVIEN WHERE TenNV like N'%" + nhanVien + "%'";
             conn = Helper.DatabaseHelper.getDBConnect();
             statement = conn.createStatement();
             rs = statement.executeQuery(sql);

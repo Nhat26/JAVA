@@ -218,7 +218,7 @@ public class FrmLogin extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công!!");
              ToanCuc tc = new ToanCuc();
              TaiKhoan tk = new TaiKhoan();
-            tk =  TaiKhoanDAO.getInstance().get1TaiKhoan(txtTaiKhoan.getText());
+            tk = TaiKhoanDAO.getInstance().get1TaiKhoan(txtTaiKhoan.getText());
             tc.setTen(tk.getTenNV()); 
             frmQuanLyChung t = new frmQuanLyChung();
             t.setVisible(true);

@@ -25,9 +25,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmQLDoUong extends javax.swing.JFrame {
 
-    /**
-     * Creates new form QuanLyBan
-     */
     DefaultTableModel tableModel;
     int idSave = -1;
 
@@ -80,7 +77,7 @@ public class frmQLDoUong extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Quản lý bàn");
+        setTitle("Quản lý đồ uống");
         setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N

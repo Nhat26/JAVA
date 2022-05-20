@@ -74,6 +74,11 @@ public class frmTimNhanVien extends javax.swing.JFrame {
                 txtHotenCaretUpdate(evt);
             }
         });
+        txtHoten.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHotenActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -273,6 +278,10 @@ public class frmTimNhanVien extends javax.swing.JFrame {
         qld.setVisible(true);
         dispose();  
     }//GEN-LAST:event_txtTroVeActionPerformed
+
+    private void txtHotenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHotenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHotenActionPerformed
 
     /**
      * @param args the command line arguments

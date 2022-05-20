@@ -184,7 +184,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
         // TODO add your handling code here:
-        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+        if (!TaiKhoanDAO.getInstance().GetAccount().getMatKhau().equals("admin")) {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
             return;
         }
@@ -208,7 +208,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnQLTKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLTKActionPerformed
         // TODO add your handling code here:
-        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+        if (!TaiKhoanDAO.getInstance().GetAccount().getMatKhau().equals("admin")) {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
             return;
         }
@@ -219,7 +219,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+        if (!TaiKhoanDAO.getInstance().GetAccount().getMatKhau().equals("admin")) {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
             return;
         }
@@ -243,7 +243,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnOrder1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrder1ActionPerformed
         // TODO add your handling code here:
-        if (!TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("2") && TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("2")){
+        if (TaiKhoanDAO.getInstance().GetAccount().getMatKhau().equals("admin") ){
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
             return;
         }
@@ -253,7 +253,7 @@ public class frmQuanLyChung extends javax.swing.JFrame {
 
     private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
         // TODO add your handling code here:
-        if (TaiKhoanDAO.getInstance().GetAccount().getLoaiTK().equals("1")) {
+        if (!TaiKhoanDAO.getInstance().GetAccount().getMatKhau().equals("admin")) {
             JOptionPane.showMessageDialog(null, "Bạn không có quyền truy cập chức năng này!");
             return;
         }
